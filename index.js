@@ -5,6 +5,19 @@ const app = express();
 //Importing the mongoose connection from the db module
 //Used to establish the MongoDB connection
 const mongoose = require('./db');
+const employeeRoutes = require('./routes/employees');  // Importing employee routes
+const shiftRoutes = require('./routes/shifts');  // Importing shift routes
+const jobRoutes = require('./routes/jobs'); // Importing jobs routes
+const clientRoutes = require('./routes/clients'); // Importing clients routes
+
+app.use(express.json());  // Middleware to parse JSON requests
+
+//connecting routes to Express application.
+app.use('/employees', employeeRoutes);  // Mount the employee routes
+app.use('/shifts', shiftRoutes);  // Mount the shift routes
+app.use('/jobs', jobRoutes);
+app.use('/clients', clientRoutes);
+
 
 // Basic route to test the server
 app.get('/', (req, res) => {
