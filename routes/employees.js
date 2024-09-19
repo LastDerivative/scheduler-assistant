@@ -2,13 +2,44 @@ const express = require('express');
 const router = express.Router();
 const { Employee } = require('../models/model');  // Importing the Employee model
 
+/*
 // Create a new employee
-router.post('/new_e', async (req, res) => { //req holds request from sender
+router.post('/new', async (req, res) => { //req holds request from sender
     //req.body populated by middleware -> express.json() in index
     try {
         const newEmployee = new Employee(req.body);
         await newEmployee.save();
         res.status(201).send(newEmployee);//sets response code to inform sender
+    } catch (err) {
+        res.status(400).send({ error: err.message });
+    }
+});
+
+{
+    "name": "Gus Test",
+    "email": "testing@example.com",
+    "active": true,
+    "_id": "66c4fc5edaefa7f6a2042945",
+    "__v": 0
+}
+*/
+// TO DO: add an option to check for a current email?
+// Employee registration route
+router.post('/register', async (req, res) => { //req holds request from sender
+    try {
+        // Create a new employee from the request body
+        const newEmployee = new Employee(req.body);
+        
+        // Save the employee, and the password will be hashed automatically by the pre-save hook
+        await newEmployee.save();
+        
+        // Send the newly created employee object back (without password for security)
+        const { password, ...employeeWithoutPassword } = newEmployee.toObject(); // Exclude password in response
+        
+        res.status(201).send({
+            message: 'Employee registered successfully',  // Success message
+            employee: employeeWithoutPassword              // Employee data without password
+        });
     } catch (err) {
         res.status(400).send({ error: err.message });
     }
