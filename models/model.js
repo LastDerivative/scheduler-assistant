@@ -1,4 +1,5 @@
 const mongoose = require('../db');
+const bcrypt = require('bcryptjs');  // For hashing passwords
 
 // Expanded Employee Schema
 const employeeSchema = new mongoose.Schema({
@@ -8,9 +9,26 @@ const employeeSchema = new mongoose.Schema({
     //hireDate: { type: Date, default: Date.now },
     //position: { type: String },
     phoneNumber: { type: String },
-    active: { type: Boolean, default: true }
+    active: { type: Boolean, default: true },
+    password: { type: String, required: true }  // Added field for password
 });
 
+// Pre-save hook to hash password before saving it in the database
+employeeSchema.pre('save', async function (next) {
+    try {
+        if (!this.isModified('password')) return next(); // Only hash if the password is new or modified
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);  // Hash the password
+        next();
+    } catch (err) {
+        next(err);
+    }
+});
+
+// Method to compare a given password with the hashed password stored in the database
+employeeSchema.methods.comparePassword = async function (candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
+};
 employeeSchema.virtual('fullName').get(function() {
     return this.name;  // Assuming name is a single field
 });
