@@ -33,9 +33,10 @@ const Login = () => {//holds values for email and pw, initially empty
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email:</label>
+          {/* <label>Email:</label> */}
           <input
             type="email"
+            placeholder="Email"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -43,9 +44,10 @@ const Login = () => {//holds values for email and pw, initially empty
           />
         </div>
         <div>
-          <label>Password:</label>
+          {/* <label>Email:</label> */}
           <input
             type="password"
+            placeholder="Password"
             name="password"
             value={formData.password}
             onChange={handleChange}
