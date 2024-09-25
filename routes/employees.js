@@ -1,30 +1,11 @@
 const express = require('express');
+const jwt = require('jsonwebtoken'); //used for tokens
 const router = express.Router();
 const { Employee } = require('../models/model');  // Importing the Employee model
 
-/*
-// Create a new employee
-router.post('/new', async (req, res) => { //req holds request from sender
-    //req.body populated by middleware -> express.json() in index
-    try {
-        const newEmployee = new Employee(req.body);
-        await newEmployee.save();
-        res.status(201).send(newEmployee);//sets response code to inform sender
-    } catch (err) {
-        res.status(400).send({ error: err.message });
-    }
-});
+const JWT_SECRET = 'testingthistoken'; // Test secret, replace with secure key in production
 
-{
-    "name": "Gus Test",
-    "email": "testing@example.com",
-    "active": true,
-    "_id": "66c4fc5edaefa7f6a2042945",
-    "__v": 0
-}
-*/
-// TO DO: add an option to check for a current email?
-// Employee registration route
+// Register Route
 router.post('/register', async (req, res) => { //req holds request from sender
     try {
         // Create a new employee from the request body
@@ -44,6 +25,36 @@ router.post('/register', async (req, res) => { //req holds request from sender
         res.status(400).send({ error: err.message });
     }
 });
+
+// Login route 
+router.post('/login', async (req, res) => { 
+    // Get email and password from req body 
+    const { email, password } = req.body; 
+    try { 
+      // Check if email exists 
+      const employee = await Employee.findOne({ email }); 
+
+      if (!employee) { 
+        return res.status(400).send({ error: 'Invalid email or password' }); 
+      } 
+
+      // Compare the password with the hashed password 
+      const isMatch = await employee.comparePassword(password); 
+      if (!isMatch) { 
+        return res.status(400).send({ error: 'Invalid email or password' }); 
+      } 
+
+      // Generate a JWT token with temp secret to be used across app for one hour
+      const token = jwt.sign({ id: employee._id }, JWT_SECRET, { expiresIn: '1h' }); 
+
+      // Send the token to the client 
+      res.status(200).send({ message: 'Login successful', token }); 
+
+    
+    } catch (err) { 
+      res.status(500).send({error: 'Server error during login' });
+    } 
+  }); 
 
 // Get all employees
 router.get('/all', async (req, res) => {
