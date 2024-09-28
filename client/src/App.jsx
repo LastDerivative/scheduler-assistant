@@ -6,22 +6,23 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <div>
-        <nav>
-          <Link to="/">Home</Link> | <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
-        </nav>
         <Routes>
           <Route
             path="/"
             element={
-              <div>
-                <h1>Scheduler</h1>
+              <div className="title-card">
+                <p>Welcome to the</p>
+                <h1>Job Scheduler</h1>
               </div>
             }
           />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>
+      <div>
+        <nav>
+          <Link to="/">Home</Link> | <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
+        </nav>
       </div>
     </Router>
   );
