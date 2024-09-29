@@ -50,9 +50,10 @@ const Register = () => {
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label>
+          {/* <label>Email:</label> */}
           <input
             type="text"
+            placeholder="Name"
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -60,9 +61,10 @@ const Register = () => {
           />
         </div>
         <div>
-          <label>Email:</label>
+          {/* <label>Email:</label> */}
           <input
             type="email"
+            placeholder="Email"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -70,9 +72,10 @@ const Register = () => {
           />
         </div>
         <div>
-          <label>Password:</label>
+          {/* <label>Email:</label> */}
           <input
             type="password"
+            placeholder="Password"
             name="password"
             value={formData.password}
             onChange={handleChange}
@@ -80,18 +83,20 @@ const Register = () => {
           />
         </div>
         <div>
-          <label>Phone Number:</label>
+          {/* <label>Email:</label> */}
           <input
             type="text"
+            placeholder="Phone Number"
             name="phoneNumber"
             value={formData.phoneNumber}
             onChange={handleChange}
           />
         </div>
         <div>
-          <label>Department:</label>
+          {/* <label>Email:</label> */}
           <input
             type="text"
+            placeholder="Department"
             name="department"
             value={formData.department}
             onChange={handleChange}
