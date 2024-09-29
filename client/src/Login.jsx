@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {//holds values for email and pw, initially empty
   //1. state variables and error handling
@@ -29,6 +29,7 @@ const Login = () => {//holds values for email and pw, initially empty
   };
 
   return (
+
     <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
@@ -57,6 +58,11 @@ const Login = () => {//holds values for email and pw, initially empty
         <button type="submit">Login</button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      <div>
+        <nav>
+          <Link to="/register">Sign Up</Link>
+        </nav>
+      </div>
     </div>
   );
 };
