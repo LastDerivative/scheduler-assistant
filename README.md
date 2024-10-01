@@ -25,9 +25,13 @@ Directory Setup
 - Open a terminal in the project directory.
 - Run 'npm init -y' to start the project.
 - Run 'npm install express mongoose' to allow database connection.
+- Run 'npm install' on both the root directory,
+- and run 'npm install' again on the client directory.
 
 Run (EARLY DEVELOPMENT)
 
 - Run the backend in VScode with 'node index.js'.
 - Should output 'Connected to MongoDB' if the server is running.
 - Connect on a web-browser at localhost:3000.
+- Run the frontend on a terminal in the client directory with 'npm run dev'.
+- Connect on a web-browser at localhost:5173.
