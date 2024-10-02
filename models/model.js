@@ -3,13 +3,14 @@ const bcrypt = require('bcryptjs');  // For hashing passwords
 
 // Expanded Employee Schema
 const employeeSchema = new mongoose.Schema({
+    employeeID: { type: mongoose.Schema.Types.ObjectId, required: true, unique: true }, 
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    department: { type: String },
     //hireDate: { type: Date, default: Date.now },
     //position: { type: String },
-    phoneNumber: { type: String },
-    active: { type: Boolean, default: true },
+    orgID: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: true },
+    managerStatus: { type: Boolean, default: false },   // Boolean for whether or not employee is a manager
+    manager: { type: String, required: false },  // The employee's manager (managers may supervise themselves?)
     password: { type: String, required: true }  // Added field for password
 });
 
@@ -43,14 +44,17 @@ employeeSchema.statics.findByEmail = function(email) {
 
 employeeSchema.index({ email: 1 });
 
-// Client Schema
-// Client is needed to create a job ex: Mcdonalds
-const clientSchema = new mongoose.Schema({
-    organization: { type: String, required: true, unique: true },
-    email: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
-    active: { type: Boolean, default: true }
+// Organization Schema
+// Organization is needed to have a site ex: Site A which holds Shifts for Employees
+const organizationSchema = new mongoose.Schema({
+    orgID: { type: mongoose.Schema.Types.ObjectId, required: true, unique: true },
+    orgName: { type: String, required: true },
+    orgEmail: { type: String, required: true },
+    establishDate: { type: Date, required: true },
+    orgPhone: { type: String, required: true }
 });
+
+/* Removal of Job schema in favor of unrestricted shift names
 
 // Job Schema
 // A client is linked to jobs ex: Mcdonalds has a number of restaurants, each of which would be a job
@@ -66,12 +70,28 @@ const jobSchema = new mongoose.Schema({
 
 // Compound Index to ensure jobName is unique per client
 jobSchema.index({ jobName: 1, clientId: 1 }, { unique: true });
+*/
+
+// Site Schema
+// Site is tied to an organization
+const siteSchema = new mongoose.Schema({
+    siteID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    siteName: { type: String, required: true },
+    orgID: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: true },
+    address: { type: String, required: true }
+});
 
 // Shift Schema
-// Shift is tied to a job and doest not need an employee to be created as it can be filled later
+// Shift is tied to a site and does not need an employee to be created as it can be filled later
 const shiftSchema = new mongoose.Schema({
+    shiftID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    shiftName: { type: String, required: true },
     employeeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: false },  // Employee assignment is optional
     startTime: { type: Date, required: true },  // Shift start time
+    endTime: { type: Date, required: true },  // Shift end time
+    siteID: { type: mongoose.Schema.Types.ObjectId, ref: 'Site', required: true }
+
+    /* Duration can be calculated in the backend while processing requests for display on the frontend. Alternatively, can implement as a derived attribute
     duration: { 
         type: Number, 
         required: true, 
@@ -82,11 +102,12 @@ const shiftSchema = new mongoose.Schema({
             message: 'Duration must be either 4 or 8 hours'
         }
     },  // Duration in hours, only allowing 4 or 8
-    location: { type: String },
-    role: { type: String },
-    status: { type: String, enum: ['Filled', 'Not Filled'], default: 'Not Filled' },  // Automatically set based on employeeId
-    jobId: { type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: true }  // Reference to the job
+    */
+    //status: { type: String, enum: ['Filled', 'Not Filled'], default: 'Not Filled' },  // Automatically set based on employeeId
+    //jobId: { type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: true }  // Reference to the job
 });
+
+/* May use manual entry of endTime and removal of status attribute
 
 // Pre-save middleware to calculate endTime and set status
 // Need to account for 30 minute break, or assume a paid break for all shifts
@@ -99,6 +120,7 @@ shiftSchema.pre('save', function(next) {
 
     next();
 });
+*/
 
 shiftSchema.post('save', function(doc) {//runs after document has been saved
     console.log('A shift was saved:', doc);
@@ -108,8 +130,8 @@ shiftSchema.index({ startTime: 1 }); // may help with speed if indexing on time 
 
 // Model Creation
 const Employee = mongoose.model('Employee', employeeSchema);
-const Client = mongoose.model('Client', clientSchema);
-const Job = mongoose.model('Job', jobSchema);
+const Organization = mongoose.model('Organization', organizationSchema);
+const Site = mongoose.model('Site', siteSchema);
 const Shift = mongoose.model('Shift', shiftSchema);
 
-module.exports = { Employee, Client, Job, Shift };
+module.exports = { Employee, Organization, Site, Shift };
