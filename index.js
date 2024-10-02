@@ -7,16 +7,16 @@ const app = express();
 const mongoose = require('./db');
 const employeeRoutes = require('./routes/employees');  // Importing employee routes
 const shiftRoutes = require('./routes/shifts');  // Importing shift routes
-const jobRoutes = require('./routes/jobs'); // Importing jobs routes
-const clientRoutes = require('./routes/clients'); // Importing clients routes
+const siteRoutes = require('./routes/sites'); // Importing sites routes
+const organizationRoutes = require('./routes/organizations'); // Importing organizations routes
 
 app.use(express.json());  // Middleware to parse JSON requests
 
 //connecting routes to Express application.
 app.use('/employees', employeeRoutes);  // Mount the employee routes
 app.use('/shifts', shiftRoutes);  // Mount the shift routes
-app.use('/jobs', jobRoutes);
-app.use('/clients', clientRoutes);
+app.use('/sites', siteRoutes);
+app.use('/organizations', organizationRoutes);
 
 
 // Basic route to test the server

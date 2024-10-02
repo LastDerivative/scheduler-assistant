@@ -10,15 +10,16 @@ const { Shift } = require('../models/model');  // Importing the Shift model
 // with the new shift's startTime and endTime.
 router.post('/new', async (req, res) => {
     try {
-        const { employeeId, startTime, duration, jobId, location, role } = req.body;
+        const { shiftID, shiftName, employeeID, startTime, endTime, siteID } = req.body;
 
+        //Now manually entering endTime
         // Calculate endTime based on startTime and duration
-        const endTime = new Date(new Date(startTime).getTime() + duration * 60 * 60 * 1000); //calculating end time twice?
+        //const endTime = new Date(new Date(startTime).getTime() + duration * 60 * 60 * 1000); //calculating end time twice?
 
-        // If employeeId is provided, check for overlapping shifts
-        if (employeeId) {
+        // If employeeID is provided, check for overlapping shifts
+        if (employeeID) {
             const overlappingShift = await Shift.findOne({
-                employeeId: employeeId, //looking at shifts that only the supplied user ID
+                employeeID: employeeID, //looking at shifts that only the supplied user ID
                 $or: [ // will return true if any of the following apply
                     { startTime: { $lt: endTime, $gte: startTime } }, // Overlaps with the new shift's startTime
                     { endTime: { $gt: startTime, $lte: endTime } }    // Overlaps with the new shift's endTime
@@ -31,7 +32,7 @@ router.post('/new', async (req, res) => {
         }
 
         // Create the new shift
-        const newShift = new Shift({ employeeId, startTime, duration, jobId, location, role });
+        const newShift = new Shift({ shiftID, shiftName, employeeID, startTime, endTime, siteID });
 
         // Save the new shift to the database
         await newShift.save();
@@ -51,8 +52,8 @@ Testing:
     "duration": 8,
     "location": "Office",
     "role": "Developer",
-    "jobId": "64e8234be8b15b63f8d1b2a1",  // Replace with an actual Job ID from your database
-    "employeeId": "64e8233fe8b15b63f8d1b2a0"  // Optional: Replace with an actual Employee ID or remove to test 'Not Filled' status
+    "SiteID": "64e8234be8b15b63f8d1b2a1",  // Replace with an actual Site ID from your database
+    "employeeID": "64e8233fe8b15b63f8d1b2a0"  // Optional: Replace with an actual Employee ID or remove to test 'Not Filled' status
     }
 
 
@@ -62,7 +63,7 @@ Testing:
 // Get all shifts
 router.get('/', async (req, res) => {
     try {
-        const shifts = await Shift.find().populate('employeeId');
+        const shifts = await Shift.find().populate('employeeID');
         res.send(shifts);
     } catch (err) {
         res.status(500).send({ error: err.message });
@@ -72,31 +73,33 @@ router.get('/', async (req, res) => {
 // Update a shift by ID
 router.put('/:id', async (req, res) => {
     try {
-        const shiftId = req.params.id;
+        const shiftID = req.params.id;
         const updateData = req.body;
 
         // Find the current shift document to compare values
-        const existingShift = await Shift.findById(shiftId);
+        const existingShift = await Shift.findById(shiftID);
         if (!existingShift) {
             return res.status(404).send({ error: 'Shift not found' });
         }
 
+        /* endTime is now manually entered
         // If startTime or duration is being updated, recalculate endTime
         if (updateData.startTime || updateData.duration) {
             const newStartTime = updateData.startTime ? new Date(updateData.startTime) : existingShift.startTime;
             const newDuration = updateData.duration !== undefined ? updateData.duration : existingShift.duration;
             updateData.endTime = new Date(newStartTime.getTime() + newDuration * 60 * 60 * 1000);
         }
+            */
 
-        // If employeeId is provided or being updated, check for overlapping shifts
-        if (updateData.employeeId || updateData.startTime || updateData.duration) {
-            const employeeId = updateData.employeeId || existingShift.employeeId;// new ID or current
+        // If employeeID is provided or being updated, check for overlapping shifts
+        if (updateData.employeeID || updateData.startTime || updateData.endTime) {
+            const employeeID = updateData.employeeID || existingShift.employeeID;// new ID or current
             const newStartTime = updateData.startTime ? new Date(updateData.startTime) : existingShift.startTime;
             const newEndTime = updateData.endTime ? new Date(updateData.endTime) : existingShift.endTime;
 
             const overlappingShift = await Shift.findOne({
-                _id: { $ne: shiftId },  // Exclude the current shift being updated
-                employeeId: employeeId,
+                _id: { $ne: shiftID },  // Exclude the current shift being updated
+                employeeID: employeeID,
                 $or: [
                     { startTime: { $lt: newEndTime, $gte: newStartTime } }, // Overlaps with the new shift's startTime
                     { endTime: { $gt: newStartTime, $lte: newEndTime } }    // Overlaps with the new shift's endTime
@@ -109,7 +112,7 @@ router.put('/:id', async (req, res) => {
         }
 
         // Update the shift in the database
-        const updatedShift = await Shift.findByIdAndUpdate(shiftId, updateData, { new: true, runValidators: true });
+        const updatedShift = await Shift.findByIdAndUpdate(shiftID, updateData, { new: true, runValidators: true });
         if (!updatedShift) {
             return res.status(404).send({ error: 'Shift not found' });
         }
@@ -137,7 +140,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         // Query the database to get all shifts
-        const shifts = await Shift.find().populate('employeeId').populate('jobId');
+        const shifts = await Shift.find().populate('employeeID').populate('siteID');
         // Send the shifts as the response
         res.send(shifts);
     } catch (err) {

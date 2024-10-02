@@ -47,7 +47,7 @@ router.post('/login', async (req, res) => {
       // Generate a JWT token with temp secret to be used across app for one hour
       const token = jwt.sign({ id: employee._id }, JWT_SECRET, { expiresIn: '1h' }); 
 
-      // Send the token to the client 
+      // Send the token to the organization 
       res.status(200).send({ message: 'Login successful', token }); 
 
     

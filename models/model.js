@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');  // For hashing passwords
 
 // Expanded Employee Schema
 const employeeSchema = new mongoose.Schema({
-    employeeID: { type: mongoose.Schema.Types.ObjectId, required: true, unique: true }, 
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     //hireDate: { type: Date, default: Date.now },
@@ -47,7 +46,6 @@ employeeSchema.index({ email: 1 });
 // Organization Schema
 // Organization is needed to have a site ex: Site A which holds Shifts for Employees
 const organizationSchema = new mongoose.Schema({
-    orgID: { type: mongoose.Schema.Types.ObjectId, required: true, unique: true },
     orgName: { type: String, required: true },
     orgEmail: { type: String, required: true },
     establishDate: { type: Date, required: true },
@@ -75,7 +73,6 @@ jobSchema.index({ jobName: 1, clientId: 1 }, { unique: true });
 // Site Schema
 // Site is tied to an organization
 const siteSchema = new mongoose.Schema({
-    siteID: { type: mongoose.Schema.Types.ObjectId, required: true },
     siteName: { type: String, required: true },
     orgID: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: true },
     address: { type: String, required: true }
@@ -84,9 +81,8 @@ const siteSchema = new mongoose.Schema({
 // Shift Schema
 // Shift is tied to a site and does not need an employee to be created as it can be filled later
 const shiftSchema = new mongoose.Schema({
-    shiftID: { type: mongoose.Schema.Types.ObjectId, required: true },
     shiftName: { type: String, required: true },
-    employeeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: false },  // Employee assignment is optional
+    employeeID: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: false },  // Employee assignment is optional
     startTime: { type: Date, required: true },  // Shift start time
     endTime: { type: Date, required: true },  // Shift end time
     siteID: { type: mongoose.Schema.Types.ObjectId, ref: 'Site', required: true }
