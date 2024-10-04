@@ -4,14 +4,6 @@ const { Shift } = require('../models/model');  // Importing the Shift model
 
 //TODO: Test shift overlaps
 
-// Function to calculate duration in hours
-const calculateDuration = (startTime, endTime) => {
-    const start = new Date(startTime);
-    const end = new Date(endTime);
-    const durationInMilliseconds = end - start;
-    const durationInHours = durationInMilliseconds / (1000 * 60 * 60); // convert milliseconds to hours
-    return durationInHours;
-};
 
 // Create a new shift
 // Before saving a new shift or updating an existing shift, we need to query the database to see if there are any shifts that overlap 
@@ -20,13 +12,9 @@ router.post('/new', async (req, res) => {
     try {
         const { shiftID, shiftName, employeeID, startTime, endTime, siteID } = req.body;
 
-        // Now manually entering endTime
+        //Now manually entering endTime
         // Calculate endTime based on startTime and duration
-        const duration = calculateDuration(startTime, endTime);
-
-        if (duration <= 0) {
-            return res.status(400).send({ error: 'End time must be later than start time.' });
-        }
+        //const endTime = new Date(new Date(startTime).getTime() + duration * 60 * 60 * 1000); //calculating end time twice?
 
         // If employeeID is provided, check for overlapping shifts
         if (employeeID) {
@@ -44,13 +32,13 @@ router.post('/new', async (req, res) => {
         }
 
         // Create the new shift
-        const newShift = new Shift({ shiftID, shiftName, employeeID, startTime, endTime, siteID, duration });
+        const newShift = new Shift({ shiftID, shiftName, employeeID, startTime, endTime, siteID });
 
         // Save the new shift to the database
         await newShift.save();
 
         // Send the created shift as a response with status 201 (Created)
-        res.status(201).send({ newShift, duration });
+        res.status(201).send(newShift);
     } catch (err) {
         // Send an error response with status 400 (Bad Request) if something goes wrong
         res.status(400).send({ error: err.message });
@@ -108,11 +96,6 @@ router.put('/:id', async (req, res) => {
             const employeeID = updateData.employeeID || existingShift.employeeID;// new ID or current
             const newStartTime = updateData.startTime ? new Date(updateData.startTime) : existingShift.startTime;
             const newEndTime = updateData.endTime ? new Date(updateData.endTime) : existingShift.endTime;
-            const duration = calculateDuration(newStartTime, newEndTime);
-
-            if (duration <= 0) {
-                return res.status(400).send({ error: 'End time must be later than start time.' });
-            }
 
             const overlappingShift = await Shift.findOne({
                 _id: { $ne: shiftID },  // Exclude the current shift being updated

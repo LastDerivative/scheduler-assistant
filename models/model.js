@@ -85,8 +85,7 @@ const shiftSchema = new mongoose.Schema({
     employeeID: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: false },  // Employee assignment is optional
     startTime: { type: Date, required: true },  // Shift start time
     endTime: { type: Date, required: true },  // Shift end time
-    siteID: { type: mongoose.Schema.Types.ObjectId, ref: 'Site', required: true },
-    duration: { type: Number, required: true } // Store duration (in hours)
+    siteID: { type: mongoose.Schema.Types.ObjectId, ref: 'Site', required: true }
 
     /* Duration can be calculated in the backend while processing requests for display on the frontend. Alternatively, can implement as a derived attribute
     duration: { 
