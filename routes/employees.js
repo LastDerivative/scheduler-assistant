@@ -47,8 +47,8 @@ router.post('/login', async (req, res) => {
       // Generate a JWT token with temp secret to be used across app for one hour
       const token = jwt.sign({ id: employee._id }, JWT_SECRET, { expiresIn: '1h' }); 
 
-      // Send the token to the organization 
-      res.status(200).send({ message: 'Login successful', token }); 
+      // Send the token to the organization and EmployeeId
+      res.status(200).send({ employeeId: employee._id, token }); 
 
     
     } catch (err) { 
@@ -67,6 +67,7 @@ router.get('/all', async (req, res) => {
 });
 
 // Get an employee by ID
+// TODO: Update to not return password hash
 router.get('/:id', async (req, res) => {
     try {
         const employee = await Employee.findById(req.params.id);

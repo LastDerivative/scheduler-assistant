@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
+
 const Login = () => {//holds values for email and pw, initially empty
   //1. state variables and error handling
   //formData is set as a state variable to store vars for the login form fields -> email and pw
@@ -23,9 +24,32 @@ const Login = () => {//holds values for email and pw, initially empty
 
   //3. function to handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();//prevents the refresh in HTML
-    // Temp for future API
-    alert('Login functionality will be added soon!');
+    e.preventDefault();
+  
+    try {
+      // Send a POST request to authenticate the user
+      const response = await fetch('/employees/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData), // Send formData as the request body
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Assuming the response includes employeeId and a token
+        const { employeeId } = data;
+  
+        // Navigate to the employee dashboard using employeeId
+        navigate(`/dashboard/${employeeId}`);
+      } else {
+        // If the login failed
+        setError(data.message || 'Invalid email or password. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError('An unexpected error occurred. Please try again later.');
+    }
   };
 
   return (

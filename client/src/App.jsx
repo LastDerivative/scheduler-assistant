@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-ro
 import Register from './Register'; //Register component
 import Login from './Login'; //Login component
 import Home from './pages/Home';
+import EmployeeDashboard from './pages/EmployeeDashboard';
 import './App.css';
 
 function App() {
@@ -22,7 +23,10 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          {/* Redirects to home by default */}
           <Route path="/" element={<Navigate to="/home" />} />
+          {/* Route for Employee Dashboard with employee ID as a parameter */}
+          <Route path="/dashboard/:employeeId" element={<EmployeeDashboard />} />
         </Routes>
       
       {/*<div>
