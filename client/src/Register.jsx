@@ -6,8 +6,8 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
-    phoneNumber: '',
-    department: '',
+    //phoneNumber: '',
+    orgID: '',
   });
 
   const [error, setError] = useState('');
@@ -133,9 +133,9 @@ const Register = () => {
                 <div>
                   <input
                     type="text"
-                    placeholder="Phone Number"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
+                    placeholder="Organization ID"
+                    name="orgID"
+                    value={formData.orgID}
                     onChange={handleChange}
                   />
                 </div>

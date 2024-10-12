@@ -145,7 +145,7 @@ p {
   padding: 10px;
   background-color: #e3e3e3;
   margin: 10px 0; /* Space between shifts */
-  text-align: left;
+  text-align: center;
 }
 
 /* Calendar Container for 2-week view */
@@ -173,7 +173,7 @@ p {
 }
 
 .shift-indicator-2 {
-  position: absolute;
+  text-align: center;
   right: 5px;
   bottom: 10px;
   font-size: 1.5rem;
