@@ -60,12 +60,26 @@ Testing:
     TODO: Create a human readble ID and respond with a "success" message
 */
 
-// Get all shifts
+/*
 router.get('/', async (req, res) => {
     try {
         const shifts = await Shift.find().populate('employeeID');
         res.send(shifts);
     } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+}); 
+*/
+
+// Get all shifts
+router.get('/', async (req, res) => {
+    try {
+        // Query the database to get all shifts
+        const shifts = await Shift.find().populate('employeeID').populate('siteID');
+        // Send the shifts as the response
+        res.send(shifts);
+    } catch (err) {
+        // Handle any errors
         res.status(500).send({ error: err.message });
     }
 });
@@ -136,17 +150,6 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-// Get all shifts
-router.get('/', async (req, res) => {
-    try {
-        // Query the database to get all shifts
-        const shifts = await Shift.find().populate('employeeID').populate('siteID');
-        // Send the shifts as the response
-        res.send(shifts);
-    } catch (err) {
-        // Handle any errors
-        res.status(500).send({ error: err.message });
-    }
-});
+
 
 module.exports = router;

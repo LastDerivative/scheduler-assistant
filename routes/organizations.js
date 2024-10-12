@@ -22,19 +22,20 @@ router.post('/new', async (req, res) => {
 Testing:
     http://localhost:3000/organizations/new
     {
-    "organization": "GusCoffe Inc",
-    "email": "coffee@example.com",
-    "phoneNumber": "123-1245-1234"
+    "orgName": "GusCoffe Inc",
+    "orgEmail": "coffee@example.com",
+    "establishDate": "05/04/1996",
+    "orgPhone": "123-1245-1234"
     }
 should create new organization with above info
 
 Response:
     {
-        "organization": "GusCoffe Inc",
-        "email": "coffee@example.com",
-        "phoneNumber": "123-1245-1234",
-        "active": true,
-        "_id": "66c38bd3d23961b69af90b46",
+        "orgName": "GusCoffe Inc",
+        "orgEmail": "coffee@example.com",
+        "establishDate": "1996-05-04T07:00:00.000Z",
+        "orgPhone": "123-1245-1234",
+        "_id": "670acb80e2ac74f3ee20415b",
         "__v": 0
     }
 
