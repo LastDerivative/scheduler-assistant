@@ -212,4 +212,23 @@ p {
   list-style-position: inside;
   text-align: left;
   
-} 
+}
+
+/* Timesheet Tab*/
+.timesheet-table {
+  width: 100%; /* full width of container */
+  border-collapse: collapse;  /* combines borders of cells */
+}
+
+/* to center text inside both headers, th and td */
+.timesheet-table th,
+.timesheet-table td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd; /* adds a border around cells */
+}
+
+.timesheet-table th {
+  background-color: #f2f2f2; /* Optional: to add a light background to header cells */
+  font-weight: bold;
+}

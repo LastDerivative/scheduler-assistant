@@ -143,21 +143,30 @@ const TimesheetTab = ({ shifts }) => {
     const today = new Date();
     const twoWeeksAgo = new Date(today);
     twoWeeksAgo.setDate(today.getDate() - 13);
-
+  
     shifts.forEach((shift) => {
-      const shiftDate = new Date(shift.startTime);// Create date object from string
-      if (shiftDate >= twoWeeksAgo && shiftDate <= today) {
-        const dateKey = shiftDate.toISOString().split('T')[0];
-
-        if (!groupedShifts[dateKey]) {
-          groupedShifts[dateKey] = [];
+      const shiftDate = formatDate(new Date(shift.startTime));
+      if (new Date(shift.startTime) >= twoWeeksAgo && new Date(shift.startTime) <= today) {
+        if (!groupedShifts[shiftDate]) {
+          groupedShifts[shiftDate] = [];
         }
-
-        groupedShifts[dateKey].push(shift);
+        groupedShifts[shiftDate].push(shift);
       }
     });
+  
+    // Convert groupedShifts into an array of [date, shifts] pairs
+    const groupedEntries = Object.entries(groupedShifts);
 
-    return Object.entries(groupedShifts).map(([date, shifts]) => ({ date, shifts }));
+    // Sort the entries by descending date using a callback
+    groupedEntries.sort( (a, b) => new Date(b[0]) - new Date(a[0]) ); // Calculate difference in dates
+    // If b is "greater" i.e it is later in time, the callback is positive.
+    // Thus will place b before a
+    // If negative, then a is greater and will be placed before b
+
+    // Map the sorted entries to be displayed -> date , shifts
+    const sortedGroupedShifts = groupedEntries.map(([date, shifts]) => ({ date, shifts }));
+
+    return sortedGroupedShifts;
   };
 
  
