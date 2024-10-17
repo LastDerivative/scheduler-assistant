@@ -10,7 +10,7 @@ const { Shift } = require('../models/model');  // Importing the Shift model
 // with the new shift's startTime and endTime.
 router.post('/new', async (req, res) => {
     try {
-        const { shiftID, shiftName, employeeID, startTime, endTime, siteID } = req.body;
+        const { shiftID, shiftName, employeeID, startTime, endTime, punchIn, punchOut, siteID } = req.body;
 
         //Now manually entering endTime
         // Calculate endTime based on startTime and duration
@@ -32,7 +32,7 @@ router.post('/new', async (req, res) => {
         }
 
         // Create the new shift
-        const newShift = new Shift({ shiftID, shiftName, employeeID, startTime, endTime, siteID });
+        const newShift = new Shift({ shiftID, shiftName, employeeID, startTime, endTime, punchIn, punchOut, siteID });
 
         // Save the new shift to the database
         await newShift.save();
@@ -48,12 +48,13 @@ router.post('/new', async (req, res) => {
 Testing:
     http://localhost:3000/shifts/new
     {
-    "startTime": "2024-09-01T08:00:00Z",
-    "duration": 8,
-    "location": "Office",
-    "role": "Developer",
-    "SiteID": "64e8234be8b15b63f8d1b2a1",  // Replace with an actual Site ID from your database
-    "employeeID": "64e8233fe8b15b63f8d1b2a0"  // Optional: Replace with an actual Employee ID or remove to test 'Not Filled' status
+    "shiftName": "Developer",
+    "employeeID": "6700552b63dc479a35f9ea76",
+    "startTime": "2024-10-17T15:55:00Z",
+    "endTime": "2024-10-17T16:00:00Z",
+    "punchIn": "2024-10-17T15:55:00Z",
+    "punchOut": "2024-10-17T16:00:00Z",
+    "siteID": "670056a137ecddceac87a9a7"
     }
 
 
