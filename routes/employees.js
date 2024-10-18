@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken'); //used for tokens
 const router = express.Router();
-const { Employee } = require('../models/model');  // Importing the Employee model
+const { Employee, Shift } = require('../models/model');  // Importing the Employee model
 
 const JWT_SECRET = 'testingthistoken'; // Test secret, replace with secure key in production
 
@@ -77,6 +77,28 @@ router.get('/:id', async (req, res) => {
         res.send(employee);
     } catch (err) {
         res.status(500).send({ error: err.message });
+    }
+});
+
+// Get all shifts for a given employeeID
+router.get('/:id/shifts', async (req, res) => {
+    const employeeID = req.params.id;
+
+    try {
+        // Find all shifts assigned to the employee with the given ID
+        const allShifts = await Shift.find({ employeeID });
+
+        /* //Not sure if needed for FrontEnd
+        if (shifts.length === 0) {
+            return res.status(404).send({ message: 'No shifts found for this employee.' });
+        }
+        */
+       
+        // Return the shifts in the response
+        res.status(200).json(allShifts);
+    } catch (error) {
+        console.error('Error fetching shifts:', error);
+        res.status(500).send({ message: 'Internal server error' });
     }
 });
 

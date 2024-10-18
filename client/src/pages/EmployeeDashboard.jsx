@@ -266,8 +266,30 @@ const EmployeeDashboard = () => {
     }
   }, []);
 
+  // To hold shift data
+  const [shifts, setShifts] = useState([]);
+  // Fetch shifts data when component mounts or employeeId changes
+  useEffect(() => {
+    const fetchShifts = async () => {
+      const response = await fetch(`/employees/${employeeId}/shifts`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setShifts(data);
+      } else {
+        setError(data.error || 'Failed to fetch shifts data.');
+      }
+    };
+
+    if (employeeId) {
+      fetchShifts();
+    }
+  }, [employeeId]);
+
+
   // State to hold dummy data
   // TODO: Handle multiple shifts in one date
+  /*
   const [shifts, setShifts] = useState([
     {
       _id: '1',
@@ -318,6 +340,8 @@ const EmployeeDashboard = () => {
       siteID: { siteName: 'Main Office' },
     }
   ]);
+*/
+
 
   useEffect(() => {
     // Set the next 5 dates for the dashboard
