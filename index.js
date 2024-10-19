@@ -9,6 +9,7 @@ const employeeRoutes = require('./routes/employees');  // Importing employee rou
 const shiftRoutes = require('./routes/shifts');  // Importing shift routes
 const siteRoutes = require('./routes/sites'); // Importing sites routes
 const organizationRoutes = require('./routes/organizations'); // Importing organizations routes
+const employeeRequestRoutes = require('./routes/employeeRequests');  // Importing employeeRequest routes
 
 app.use(express.json());  // Middleware to parse JSON requests
 
@@ -17,6 +18,7 @@ app.use('/employees', employeeRoutes);  // Mount the employee routes
 app.use('/shifts', shiftRoutes);  // Mount the shift routes
 app.use('/sites', siteRoutes);
 app.use('/organizations', organizationRoutes);
+app.use('/employeeRequests', employeeRequestRoutes);
 
 
 // Basic route to test the server
