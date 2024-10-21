@@ -151,6 +151,58 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// Punch-In Route (POST /shifts/:id/punch-in)
+router.post('/:id/punch-in', async (req, res) => {
+    try {
+        const shiftID = req.params.id;
+        const shift = await Shift.findById(shiftID);
 
+        if (!shift) {
+            return res.status(404).send({ error: 'Shift not found' });
+        }
+
+        if (shift.punchIn) {
+            return res.status(400).send({ error: 'Shift has already been punched in.' });
+        }
+
+        shift.punchIn = new Date(); // Set punchIn to current time
+
+        // Use { validateBeforeSave: false } to prevent the shift from being validated
+        await shift.save({ validateBeforeSave: false });
+
+        res.send({ message: 'Punched in successfully', shift });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+});
+
+// Punch-Out Route (POST /shifts/:id/punch-out)
+router.post('/:id/punch-out', async (req, res) => {
+    try {
+        const shiftID = req.params.id;
+        const shift = await Shift.findById(shiftID);
+
+        if (!shift) {
+            return res.status(404).send({ error: 'Shift not found' });
+        }
+
+        if (!shift.punchIn) {
+            return res.status(400).send({ error: 'Cannot punch out without punching in first.' });
+        }
+
+        if (shift.punchOut) {
+            return res.status(400).send({ error: 'Shift has already been punched out.' });
+        }
+
+        shift.punchOut = new Date(); // Set punchOut to current time
+
+        // Use { validateBeforeSave: false } to prevent the shift from being validated
+        await shift.save({ validateBeforeSave: false });
+
+        res.send({ message: 'Punched out successfully', shift });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+});
 
 module.exports = router;
