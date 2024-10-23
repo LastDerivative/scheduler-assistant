@@ -1,0 +1,42 @@
+
+.punches-container .MuiTypography-h4 {
+    font-size: 3rem ; /* Example of a larger title font size */
+    font-weight: bold; /* Optional: make the title bold */
+}
+
+.shift-details .MuiTypography-root {
+    font-size: 1.75rem ; /* Force the font size to update */
+}
+
+.button-container {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    justify-content: center; /* Centers buttons horizontally */
+    align-items: center; /* Centers buttons vertically */
+}
+
+/* Targeting the MUI button class to increase font size and padding */
+button.MuiButton-root {
+    font-size: 1.2rem ; /* Force larger font size for buttons */
+    padding: 12px 24px ; /* Force larger padding for buttons */
+}
+
+/* Increased specificity by specifying the element chips with the class */
+.status-chip.MuiChip-root {
+    margin-top: 16px;
+    margin-bottom: 16px; /* Add margin below the chip to increase spacing */
+    font-size: 1.75rem;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: center; /* Centers the chip horizontally */
+}
+
+.alert-message {
+    margin-top: 24px;
+    font-size: 1.25rem !important; /* Force larger font for alerts */
+    padding: 16px 24px;
+    display: flex;
+    justify-content: center; /* Centers alert horizontally */
+    text-align: center; /* Ensures text inside alert is centered */
+}
