@@ -52,6 +52,19 @@ const organizationSchema = new mongoose.Schema({
     orgPhone: { type: String, required: true }
 });
 
+// EmployeeRequests Schema
+// Requests made by employees to trade shifts or process time-off
+const employeeRequestSchema = new mongoose.Schema({
+    employeeID: { type: mongoose.Schema.Types.ObjectId, ref: "Employee", required: true },
+    requestType: { type: String, required: true }, // shift trade or time-off
+    timeOffStart: { type: Date, default: null },
+    timeOffEnd: { type: Date, default: null },
+    shiftToTradeID: { type: mongoose.Schema.Types.ObjectId, ref: "Shift", default: null }, // if shift trade, the shift the employee would like to lose
+    desiredShiftID: { type: mongoose.Schema.Types.ObjectId, ref: "Shift", default: null }, // if shift trade, the shift the employee would like to take
+    status: { type: String, default: "pending" }, // pending/approved/denied
+    submitDate: { type: Date, required: true } // Date request was made
+})
+
 /* Removal of Job schema in favor of unrestricted shift names
 
 // Job Schema
@@ -131,5 +144,6 @@ const Employee = mongoose.model('Employee', employeeSchema);
 const Organization = mongoose.model('Organization', organizationSchema);
 const Site = mongoose.model('Site', siteSchema);
 const Shift = mongoose.model('Shift', shiftSchema);
+const EmployeeRequest = mongoose.model('EmployeeRequest', employeeRequestSchema);
 
-module.exports = { Employee, Organization, Site, Shift };
+module.exports = { Employee, Organization, Site, Shift, EmployeeRequest };
