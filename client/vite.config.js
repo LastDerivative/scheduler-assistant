@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/employees': 'http://localhost:3000',  // Proxy API requests to back-end
+      '/shifts': 'http://localhost:3000',       // Add this line to proxy shift requests
     }
   }
 });
