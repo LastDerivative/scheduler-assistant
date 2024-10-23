@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './EmployeeDashboard.css';
+// Components
+import Requests from './EmployeeDashboardComponents/EmployeeDashRequests';
+import Punches from './EmployeeDashboardComponents/Punches';
+
 
 
 // Format date as "Month Day, Year"
@@ -286,63 +290,6 @@ const EmployeeDashboard = () => {
     }
   }, [employeeId]);
 
-
-  // State to hold dummy data
-  // TODO: Handle multiple shifts in one date
-  /*
-  const [shifts, setShifts] = useState([
-    {
-      _id: '1',
-      shiftName: 'Morning Shift',
-      employeeID: '12345',
-      startTime: '2024-10-12T09:00:00.000Z',
-      endTime: '2024-10-12T17:00:00.000Z',
-      siteID: { siteName: 'Main Office' },
-    },
-    {
-      _id: '2',
-      shiftName: 'Design Shift',
-      employeeID: '12346',
-      startTime: '2024-10-13T10:00:00.000Z',
-      endTime: '2024-10-13T18:00:00.000Z',
-      siteID: { siteName: 'Remote' },
-    },
-    {
-      _id: '3',
-      shiftName: 'Manager Morning Shift',
-      employeeID: '12347',
-      startTime: '2024-10-15T08:00:00.000Z',
-      endTime: '2024-10-15T16:00:00.000Z',
-      siteID: { siteName: 'Main Office' },
-    },
-    {
-      _id: '4',
-      shiftName: 'Manager Duplicate Shift',
-      employeeID: '12347',
-      startTime: '2024-10-15T08:00:00.000Z',
-      endTime: '2024-10-15T16:00:00.000Z',
-      siteID: { siteName: 'Main Office' },
-    },
-    {
-      _id: '5',
-      shiftName: 'Manager Late Shift',
-      employeeID: '12347',
-      startTime: '2024-10-23T08:00:00.000Z',
-      endTime: '2024-10-23T16:00:00.000Z',
-      siteID: { siteName: 'Main Office' },
-    },
-    {
-      _id: '6',
-      shiftName: 'Manager Late Shift',
-      employeeID: '12347',
-      startTime: '2024-10-10T08:00:00.000Z',
-      endTime: '2024-10-10T16:00:00.000Z',
-      siteID: { siteName: 'Main Office' },
-    }
-  ]);
-*/
-
-
   useEffect(() => {
     // Set the next 5 dates for the dashboard
     setDashboardDates(getNextFiveDates());
@@ -383,7 +330,7 @@ const EmployeeDashboard = () => {
           <li onClick={() => handleSidebarClick('home')}>Home</li>
           <li onClick={() => handleSidebarClick('profile')}>Profile</li>
           <li onClick={() => handleSidebarClick('request')}>Request</li>
-          <li onClick={() => handleSidebarClick('punch')}>Punches</li>
+          <li onClick={() => handleSidebarClick('punch')}>ClockIn/Out</li>
           <li onClick={handleLogout}>Logout</li>
         </ul>
       </div>
@@ -433,19 +380,9 @@ const EmployeeDashboard = () => {
           </div>
         )} 
 
-        {activeSidebarView === 'request' && ( 
-          <div>
-            <h1>Requests</h1>
-            <p>Manage your Requests here.</p>
-          </div>
-        )}
+        {activeSidebarView === 'request' && ( <Requests shifts={shifts} /> )}
 
-        {activeSidebarView === 'punch' && ( 
-          <div>
-            <h1>Punches</h1>
-            <p>Manage your ClockIns/ClockOuts here.</p>
-          </div>
-        )}    
+        {activeSidebarView === 'punch' && ( <Punches shifts={shifts} />   )}    
       </div>
     </div>
   );
