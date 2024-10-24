@@ -1,0 +1,246 @@
+/*TODO: Adust dont based on screen size? */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar {
+  width: 150px;
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+/* Sidebar items */
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 15px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.sidebar li:hover {
+  background-color: #34495e;
+}
+
+
+.main-content {
+  margin-left: 150px;
+  padding: 50px;
+  /*width: calc(100% - 250px);*/
+
+}
+
+/* Tab navigation styles */
+.tab-navigation {
+  display: flex;
+  width: 100%; /* Full width for the tab container */
+  justify-content: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+/* Tab buttons */
+.tab-navigation button {
+  background-color: #e3e3e3;
+  width: 150px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  outline: none; /* Remove focus outline */
+  text-align: center;
+  display: inline-block;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+/* Active tab styles */
+.tab-navigation .active-tab {
+  background-color: #2c3e50;
+  color: white;
+  border: 2px solid black;
+  transform: scale(1.05); /* Scaling for active state */
+}
+
+/* Hover effect for interaction but not on active tab */
+.tab-navigation button:not(.active-tab):hover {
+  background-color: #b3b3b3;
+  border-color: #777;
+}
+
+/* Tab content area styles */
+.tab-content {
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 200px;
+  margin-top: 20px;
+}
+
+.dashboard-tab-container {
+  display: flex;
+  flex-direction: column; /* Stack vertically */
+  gap: 20px; /* Add space between each section */
+
+}
+
+
+.team-contacts {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+
+h1, h2 {
+  margin-bottom: 30px;
+}
+
+
+p {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+
+.week-glance {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-top: 20px;
+}
+
+
+.calendar-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Create 5 equal columns */
+  gap: 20px; /* Add space between columns */
+  margin-top: 20px;
+}
+
+.day-column {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f4f4f4;
+  min-height: 200px;
+  text-align: center;
+}
+
+.shift-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #e3e3e3;
+  margin: 10px 0; /* Space between shifts */
+  text-align: center;
+}
+
+/* Calendar Container for 2-week view */
+.calendar-container-2 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
+  gap: 0px;
+  margin-top: 20px;
+}
+
+/* Day Column Styling */
+.day-column-2 {
+  border: 1px solid #ddd;
+  border-radius: 0px; /* Rounds corners */
+  padding: 10px;
+  background-color: #f4f4f4;
+  min-height: 150px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.day-column-2:not(.selected-day-2):hover {
+  background-color: #e0e0e0;
+}
+
+.shift-indicator-2 {
+  text-align: center;
+  right: 5px;
+  bottom: 10px;
+  font-size: 1.5rem;
+  color: rgb(13, 0, 255);
+}
+
+/* Highlight days with shifts */
+.shift-day-2 {
+  background-color: #e3f2fd; /* Light blue to highlight shift days */
+}
+
+.selected-day-2 {
+  background-color: #bbdefb;
+  border: 1px solid #2196f3;
+}
+
+.shift-details-2 {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+}
+
+/* Individual Shift Card Under Schedule Tab*/
+.shift-card-2 {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #e3e3e3;
+  margin: 10px 0;
+}
+
+.team-contacts ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  text-align: left;
+}
+
+/* Monthly Calendar (Manager) */
+.datepicker {
+  width: 95%;
+  max-width: 350px;
+  background-color: #FDFDFD;
+  border-radius: 10px;
+  padding: 1rem;
+  display: inline-block;
+}
+
+/* Timesheet Tab*/
+.timesheet-table {
+  width: 100%; /* full width of container */
+  border-collapse: collapse;  /* combines borders of cells */
+}
+
+/* to center text inside both headers, th and td */
+.timesheet-table th,
+.timesheet-table td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd; /* adds a border around cells */
+}
+
+.timesheet-table th {
+  background-color: #f2f2f2; /* Optional: to add a light background to header cells */
+  font-weight: bold;
+}

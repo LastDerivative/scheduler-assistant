@@ -4,6 +4,7 @@ import Register from './Register'; //Register component
 import Login from './Login'; //Login component
 import Home from './pages/Home';
 import EmployeeDashboard from './pages/EmployeeDashboard';
+import ManagerDashboard from './pages/ManagerDashboard';
 import './App.css';
 
 function App() {
@@ -27,6 +28,8 @@ function App() {
           <Route path="/" element={<Navigate to="/home" />} />
           {/* Route for Employee Dashboard with employee ID as a parameter */}
           <Route path="/dashboard/:employeeId" element={<EmployeeDashboard />} />
+          {/* Only routes to one Manager Dashboard for now */}
+          <Route path="/dashboard/manager" element={<ManagerDashboard />} />
         </Routes>
       
       {/*<div>
