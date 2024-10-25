@@ -5,8 +5,6 @@ import './EmployeeDashboard.css';
 import Requests from './EmployeeDashboardComponents/EmployeeDashRequests';
 import Punches from './EmployeeDashboardComponents/Punches';
 
-
-
 // Format date as "Month Day, Year"
 const formatDate = (date) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -130,7 +128,6 @@ const ScheduleTab = ({ shifts, scheduleDates, selectedDate, setSelectedDate }) =
     </div>
   );
 };
-
 
 const TimesheetTab = ({ shifts }) => {
   const [payPeriod, setPayPeriod] = useState([]);
