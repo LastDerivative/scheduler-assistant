@@ -1,9 +1,9 @@
-import React from 'react';
+import './MonthlyCalendar.css';
 
 const MonthlyCalendar = () => {
     return (
-        <div>Monthly Calendar View</div>
+        <div className="calendar">Monthly Calendar</div>
     )
-};
+}
 
 export default MonthlyCalendar;

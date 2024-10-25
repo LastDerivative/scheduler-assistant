@@ -123,6 +123,7 @@ p {
   border-radius: 5px;
   background-color: #f9f9f9;
   margin-top: 20px;
+  float: left;
 }
 
 
@@ -131,6 +132,8 @@ p {
   grid-template-columns: repeat(5, 1fr); /* Create 5 equal columns */
   gap: 20px; /* Add space between columns */
   margin-top: 20px;
+  float: left;
+
 }
 
 .day-column {
@@ -243,4 +246,14 @@ p {
 .timesheet-table th {
   background-color: #f2f2f2; /* Optional: to add a light background to header cells */
   font-weight: bold;
+}
+
+.profile-content {
+  padding: 20px;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
 }
