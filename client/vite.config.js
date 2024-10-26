@@ -6,8 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/employees': 'http://localhost:3000',  // Proxy API requests to back-end
-      '/shifts': 'http://localhost:3000',       // Add this line to proxy shift requests
+      '/employees': 'http://localhost:3000',  // Proxy API employees requests to back-end
+      '/shifts': 'http://localhost:3000',  // Proxy API shift requests to back-end
+      '/employeeRequests': 'http://localhost:3000',  // Proxy API shift-trade requests to back-end
     }
   }
 });

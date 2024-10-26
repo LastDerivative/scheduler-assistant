@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './EmployeeDashboard.css';
 // Components
-import Requests from './EmployeeDashboardComponents/EmployeeDashRequests';
+import Requests from './EmployeeDashboardComponents/Requests/Requests';
 import Punches from './EmployeeDashboardComponents/Punches';
 
 
@@ -380,7 +380,7 @@ const EmployeeDashboard = () => {
           </div>
         )} 
 
-        {activeSidebarView === 'request' && ( <Requests shifts={shifts} /> )}
+        {activeSidebarView === 'request' && ( <Requests employeeID={employeeId} shifts={shifts} /> )}
 
         {activeSidebarView === 'punch' && ( <Punches shifts={shifts} />   )}    
       </div>
