@@ -21,15 +21,48 @@ const ShiftTrading = ({ employeeID }) => {
   useEffect(() => {
     const fetchShiftTrades = async () => {
       try {
+        // Fetch shift trade requests
         const response = await axios.get(`/employees/${employeeID}/employeeRequests/shiftTrades`);
-        setShiftTrades(response.data);
+        const trades = response.data;
+
+        // Fetch and add shift names for each shift in the trade data
+        const updatedTrades = await Promise.all(
+          trades.map(async (trade) => {
+            // Fetch names for both shifts involved in the trade
+            const shiftToTradeName = await fetchShiftName(trade.shiftToTradeID);
+            const desiredShiftName = await fetchShiftName(trade.desiredShiftID);
+
+            // Return a new object with the shift names included
+            return {
+              ...trade,
+              shiftToTradeName,
+              desiredShiftName,
+            };
+          })
+        );
+
+        // Update state with trades that include shift names
+        setShiftTrades(updatedTrades);
       } catch (err) {
         setError("Failed to load existing shift trades.");
       }
     };
+
     fetchShiftTrades();
   }, [employeeID]);
 
+  // Function to fetch the shift name by ID
+  const fetchShiftName = async (shiftID) => {
+    try {
+      const response = await axios.get(`/shifts/${shiftID}`);
+      return response.data.shiftName; // using shiftName field
+    } catch (err) {
+      console.error("Failed to fetch shift name:", err);
+      return "Unknown Shift"; // Fallback if there's an error
+    }
+  };
+
+  // Handle form submission for new shift trade requests
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -80,8 +113,8 @@ const ShiftTrading = ({ employeeID }) => {
             <TableBody>
               {shiftTrades.map((trade) => (
                 <TableRow key={trade._id}>
-                  <TableCell>{trade.shiftToTradeID}</TableCell>
-                  <TableCell>{trade.desiredShiftID}</TableCell>
+                  <TableCell>{trade.shiftToTradeName}</TableCell>
+                  <TableCell>{trade.desiredShiftName}</TableCell>
                   <TableCell>{trade.status}</TableCell>
                 </TableRow>
               ))}

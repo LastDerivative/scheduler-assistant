@@ -150,7 +150,7 @@ router.get('/:id/employeeRequests/shiftTrades', async (req, res) => {
 
     try {
         // Find all shift trade requests assigned to the employee with the given ID
-        const allShiftTradeRequests = await EmployeeRequest.find({ employeeID, requestType: "shift trade" });
+        const allShiftTradeRequests = await EmployeeRequest.find({ employeeID, requestType: "shift-trade" });
 
         // Return the shift trade requests in the response
         res.status(200).json(allShiftTradeRequests);

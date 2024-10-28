@@ -205,4 +205,16 @@ router.post('/:id/punch-out', async (req, res) => {
     }
 });
 
+// Get by shiftID
+router.get('/:id', async (req, res) => {
+    try {
+        const shift = await Shift.findById(req.params.id);
+        if (!shift) {
+            return res.status(404).send({ error: 'Shift not found' });
+        }
+        res.send(shift);
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+});
 module.exports = router;
