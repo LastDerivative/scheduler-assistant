@@ -120,19 +120,21 @@ const TimeOff = ({ employeeID }) => {
             </Box>
             {/* Form fields for start and end dates with validation */}
             <Box component="form" onSubmit={handleSubmit}>
-              <DatePicker
-                label="Start Date"
-                value={timeOffStart}
-                onChange={(newValue) => setTimeOffStart(newValue)} // Update start date
-                shouldDisableDate={(date) => date.isBefore(dayjs())} // Disable past dates
-                disablePast
-                slotProps={{
-                  textField: {
-                    required: true,
-                    variant: "outlined",
-                  },
-                }}
-              />
+              <Box sx={{ mb: 2 }}> {/* Adds bottom margin to the Start Date picker */}
+                <DatePicker
+                  label="Start Date"
+                  value={timeOffStart}
+                  onChange={(newValue) => setTimeOffStart(newValue)} // Update start date
+                  shouldDisableDate={(date) => date.isBefore(dayjs())} // Disable past dates
+                  disablePast
+                  slotProps={{
+                    textField: {
+                      required: true,
+                      variant: "outlined",
+                    },
+                  }}
+                />
+                </Box>
               <DatePicker
                 label="End Date"
                 value={timeOffEnd}
