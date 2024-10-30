@@ -18,6 +18,14 @@ router.post('/new', async (req, res) => {
 
         // If employeeID is provided, check for overlapping shifts
         if (employeeID) {
+            if (startTime >= endTime) {
+                return res.status(400).send({ error: 'Invalid shift time range provided' });
+            }
+            
+            if (new Date(endTime) < new Date()) {
+                return res.status(400).send({ error: 'Shifts cannot be made retroactively' });
+            }
+
             const overlappingShift = await Shift.findOne({
                 employeeID: employeeID, //looking at shifts that only the supplied user ID
                 $or: [ // will return true if any of the following apply
@@ -26,7 +34,15 @@ router.post('/new', async (req, res) => {
                 ]
             });
 
-            if (overlappingShift) {
+            const encasingShift = await Shift.findOne({
+                employeeID: employeeID, //looking at shifts that only the supplied user ID
+                $and: [ // will return true if startTime and endTime occur outside of the specified frame (new shift placed within an existing one)
+                    { startTime: { $lte: startTime } },
+                    { endTime: { $gte: endTime } }
+                ]
+            })
+
+            if (overlappingShift || encasingShift) {
                 return res.status(400).send({ error: 'Shift overlaps with an existing shift for this employee' });
             }
         }
@@ -121,7 +137,16 @@ router.put('/:id', async (req, res) => {
                 ]
             });
 
-            if (overlappingShift) {
+            const encasingShift = await Shift.findOne({
+                _id: { $ne: shiftID },  // Exclude the current shift being updated
+                employeeID: employeeID, //looking at shifts that only the supplied user ID
+                $and: [ // will return true if startTime and endTime occur outside of the specified frame (new shift placed within an existing one)
+                    { startTime: { $lte: newStartTime } },
+                    { endTime: { $gte: newEndTime } }
+                ]
+            })
+
+            if (overlappingShift || encasingShift) {
                 return res.status(400).send({ error: 'Shift overlaps with an existing shift for this employee' });
             }
         }
