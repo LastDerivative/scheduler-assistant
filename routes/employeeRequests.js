@@ -7,6 +7,52 @@ router.post('/new', async (req, res) => {
     try {
         const { employeeID, requestType, timeOffStart, timeOffEnd, shiftToTradeID, desiredShiftID, status, submitDate } = req.body;
 
+        // If time-off is provided, check for overlapping requests
+        if (timeOffStart && timeOffEnd) {
+            if (timeOffStart >= timeOffEnd) {
+                return res.status(400).send({ error: 'Invalid time-off range provided' });
+            }
+
+            if (new Date(timeOffStart) < new Date()) {
+                return res.status(400).send({ error: 'Time-off requests cannot be made retroactively' });
+            }
+
+            const overlappingReq = await EmployeeRequest.findOne({
+                employeeID: employeeID, //looking at requests that only the supplied user ID
+                $or: [ // will return true if any of the following apply
+                    { timeOffStart: { $lt: timeOffEnd, $gte: timeOffStart } }, // Overlaps with the new request's timeOffStart
+                    { timeOffEnd: { $gt: timeOffStart, $lte: timeOffEnd } }    // Overlaps with the new request's timeOffEnd
+                ]
+            });
+
+            const encasingReq = await EmployeeRequest.findOne({
+                employeeID: employeeID, //looking at requests that only the supplied user ID
+                $and: [ // will return true if timeOffStart and timeOffEnd occur outside of the specified frame (new request placed within an existing one)
+                    { timeOffStart: { $lte: timeOffStart } },
+                    { timeOffEnd: { $gte: timeOffEnd } }
+                ]
+            })
+
+            if (overlappingReq || encasingReq) {
+                return res.status(400).send({ error: 'Time-off overlaps with an existing request for this employee' });
+            }
+        }
+
+        if (shiftToTradeID || desiredShiftID) {
+            const duplicateReq = await EmployeeRequest.findOne({
+                employeeID: employeeID, //looking at requests that only the supplied user ID
+                requestType: requestType,
+                $or: [
+                    { shiftToTradeID: shiftToTradeID },
+                    { desiredShiftID: desiredShiftID }
+                ]
+            });
+
+            if (duplicateReq) {
+                return res.status(400).send({ error: 'Duplicate shift trade request' });
+            }
+        }
+
         // Create the new employee request
         const newEmployeeRequest = new EmployeeRequest({ employeeID, requestType, timeOffStart, timeOffEnd, shiftToTradeID, desiredShiftID, status, submitDate });
 
@@ -23,7 +69,7 @@ router.post('/new', async (req, res) => {
 
 /*
 Testing:
-    http://localhost:3000/shifts/new
+    http://localhost:3000/employeeRequests/new
     {
     "employeeID": "6700552b63dc479a35f9ea76",
     "requestType": "Time-off",
@@ -32,7 +78,7 @@ Testing:
     "submitDate": "2024-10-19T16:00:00Z"
     }
 
-    http://localhost:3000/shifts/new
+    http://localhost:3000/employeeRequests/new
     {
     "employeeID": "6700552b63dc479a35f9ea76",
     "requestType": "Shift trade",
@@ -73,15 +119,69 @@ router.put('/:id', async (req, res) => {
         const employeeRequestID = req.params.id;
         const updateData = req.body;
 
-        // Find the current shift document to compare values
+        // Find the current request document to compare values
         const existingEmployeeRequest = await EmployeeRequest.findById(employeeRequestID);
         if (!existingEmployeeRequest) {
             return res.status(404).send({ error: 'Employee request not found' });
         }
 
-        // Check for overlapping shifts for either shiftID if provided?
+        // Check for overlapping requests for either employeeRequestID if provided?
 
-        // Update the shift in the database
+        // If employeeID is provided or being updated, check for overlapping requests
+        if (updateData.employeeID || updateData.timeOffStart || updateData.timeOffEnd) {
+            const employeeID = updateData.employeeID || existingEmployeeRequest.employeeID;// new ID or current
+            const newStartTime = updateData.timeOffStart ? new Date(updateData.timeOffStart) : existingEmployeeRequest.timeOffStart;
+            const newEndTime = updateData.timeOffEnd ? new Date(updateData.timeOffEnd) : existingEmployeeRequest.timeOffEnd;
+            
+            if (newStartTime >= newEndTime) {
+                return res.status(400).send({ error: 'Invalid time-off range provided' });
+            }
+
+            if (new Date(newStartTime) < new Date()) {
+                return res.status(400).send({ error: 'Time-off requests cannot be made retroactively' });
+            }
+
+            const overlappingReq = await EmployeeRequest.findOne({
+                _id: { $ne: employeeRequestID },  // Exclude the current request being updated
+                employeeID: employeeID, //looking at requests that only the supplied user ID
+                $or: [ // will return true if any of the following apply
+                    { timeOffStart: { $lt: newEndTime, $gte: newStartTime } }, // Overlaps with the new request's timeOffStart
+                    { timeOffEnd: { $gt: newStartTime, $lte: newEndTime } }    // Overlaps with the new request's timeOffEnd
+                ]
+            });
+
+            const encasingReq = await EmployeeRequest.findOne({
+                _id: { $ne: employeeRequestID },  // Exclude the current request being updated
+                employeeID: employeeID, //looking at requests that only the supplied user ID
+                $and: [ // will return true if timeOffStart and timeOffEnd occur outside of the specified frame (new request placed within an existing one)
+                    { timeOffStart: { $lte: newStartTime } },
+                    { timeOffEnd: { $gte: newEndTime } }
+                ]
+            })
+
+            if (overlappingReq || encasingReq) {
+                return res.status(400).send({ error: 'Time-off overlaps with an existing request for this employee' });
+            }
+            
+        }
+        
+        if (shiftToTradeID || desiredShiftID) {
+            const duplicateReq = await EmployeeRequest.findOne({
+                _id: { $ne: employeeRequestID },  // Exclude the current request being updated
+                employeeID: employeeID, //looking at requests that only the supplied user ID
+                requestType: requestType,
+                $or: [
+                    { shiftToTradeID: shiftToTradeID },
+                    { desiredShiftID: desiredShiftID }
+                ]
+            });
+
+            if (duplicateReq) {
+                return res.status(400).send({ error: 'Duplicate shift trade request' });
+            }
+        }
+
+        // Update the request in the database
         const updatedEmployeeRequest = await EmployeeRequest.findByIdAndUpdate(employeeRequestID, updateData, { new: true, runValidators: true });
         if (!updatedEmployeeRequest) {
             return res.status(404).send({ error: 'Employee request not found' });
@@ -93,7 +193,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// Delete a shift by ID
+// Delete a request by ID
 router.delete('/:id', async (req, res) => {
     try {
         const employeeRequest = await EmployeeRequest.findByIdAndDelete(req.params.id);
