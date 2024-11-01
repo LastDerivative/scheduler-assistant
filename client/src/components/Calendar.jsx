@@ -1,6 +1,6 @@
 const Calendar = () => {
   return (
-      <div>Calendar widget</div>
+    <p>Calendar</p>
   )
 };
 
