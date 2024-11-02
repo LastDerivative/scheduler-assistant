@@ -4,17 +4,22 @@ import './ManagerDashboard.css';
 import MonthlyCalendar from '../components/MonthlyCalendar.jsx';
 import Timesheet from "../components/Timesheet.jsx";
 
+const name = "Valerie";
+
 // Displays how many employees will be working on a given day
 const getHeadCount = () => {
     const [count, setCount] = useState(0);
     return count;
 }
 
-
 const DashboardTab = () => {
+    const currDate = new Date().toLocaleDateString();
+    const currTime = new Date().toLocaleTimeString();
+
     return (
         <div className="dashboard-tab-container">
-
+            <h2 className='dashboard-name'>Hello, {name}!</h2>
+            <p className='dashboard-name'>It&apos;s {currTime} on {currDate}.</p>
         </div>
     );
 };
@@ -23,6 +28,8 @@ const DashboardTab = () => {
 const ScheduleTab = () => {
     return (
         <div className="schedule-tab-container">
+            <h1>Monthly Overview</h1>
+            <h4>Here's the headcount for employees working within the next month</h4>
             <MonthlyCalendar />
         </div>
     );
@@ -31,6 +38,8 @@ const ScheduleTab = () => {
 const TimesheetTab = () => {
     return (
         <div className="timesheet-tab">
+            <h1>Weekly Timesheet</h1>
+            <p>Here's an overview of the number of hours each employee has worked this week</p>
             <Timesheet />
         </div>
     );
@@ -115,9 +124,9 @@ const ManagerDashboard = () => {
 
                         <div className="profile-content">
                             <img src="../profile-pic-100.png" alt="Avatar" className="avatar" />
-                            <p>Name: John Smith</p>
-                            <p>Email: john.smith@business.com</p>
-                            <p>Phone Number: 1.800.324.6789</p>
+                            <p>Name: {name}</p>
+                            <p>Email: {name.toLowerCase()}@business.com</p>
+                            <p>Phone Number: 1.800.324.6789</p>gi
                         </div>
                     </div>
                 )}

@@ -96,7 +96,9 @@
   gap: 20px; /* Add space between each section */
 
 }
-
+.dashboard-name {
+  padding-bottom: -50px;
+}
 
 .team-contacts {
   padding: 20px;
