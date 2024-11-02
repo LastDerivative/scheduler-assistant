@@ -1,0 +1,95 @@
+/* General container styling */
+.requests-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Specific container styling for TimeOff and ShiftTrades */
+.timeoff-container {
+    background-color: #f9f9f9;
+}
+
+.shifttrade-container {
+    background-color: #eef9ff; /* Slightly different color for shift trades */
+}
+
+/* Styles for each request chip displayed in the list */
+.request-chip {
+    margin: 5px 5px 10px 0;
+    font-size: 0.9rem;
+}
+
+/* Modal container for new request forms */
+.modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-35%, -40%);
+    width: 400px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Form styling inside the modal */
+.request-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Success and error alerts */
+.alert-message {
+    margin-top: 15px;
+}
+
+/* "New Request" buttons */
+.new-request-button {
+    margin-top: 16px;
+    align-self: flex-start;
+}
+
+/* Specific styles for "New Time-Off Request" and "New Shift Trade Request" buttons */
+.timeoff-button {
+    background-color: #c8e6c9;
+}
+
+.shifttrade-button {
+    background-color: #b3e5fc;
+}
+
+/* Dim the submit button when disabled */
+button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Close button styling for modal header */
+.close-button {
+    align-self: flex-end;
+}
+
+/* Table styling */
+.table-container {
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+.bold-header {
+    font-weight: bold !important;
+}
+
+/* Additional hover effect on request chips for better UX */
+.request-chip:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}

@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken'); //used for tokens
 const router = express.Router();
-const { Employee, Shift } = require('../models/model');  // Importing the Employee model
+const { Employee, Shift, EmployeeRequest } = require('../models/model');  // Importing the Employee model
 
 const JWT_SECRET = 'testingthistoken'; // Test secret, replace with secure key in production
 
@@ -129,4 +129,34 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// Get all time-off for a given employeeID
+router.get('/:id/employeeRequests/timeOff', async (req, res) => {
+    const employeeID = req.params.id;
+
+    try {
+        // Find all time-off requests assigned to the employee with the given ID
+        const allTimeOffRequests = await EmployeeRequest.find({ employeeID, requestType: "time-off" });
+
+        // Return the time-off requests in the response
+        res.status(200).json(allTimeOffRequests);
+    } catch (error) {
+        console.error('Error fetching time-off requests:', error);
+        res.status(500).send({ message: 'Internal server error' });
+    }
+});
+
+router.get('/:id/employeeRequests/shiftTrades', async (req, res) => {
+    const employeeID = req.params.id;
+
+    try {
+        // Find all shift trade requests assigned to the employee with the given ID
+        const allShiftTradeRequests = await EmployeeRequest.find({ employeeID, requestType: "shift-trade" });
+
+        // Return the shift trade requests in the response
+        res.status(200).json(allShiftTradeRequests);
+    } catch (error) {
+        console.error('Error fetching shift trade requests:', error);
+        res.status(500).send({ message: 'Internal server error' });
+    }
+});
 module.exports = router;

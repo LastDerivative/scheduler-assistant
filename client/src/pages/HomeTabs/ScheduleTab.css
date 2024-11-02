@@ -1,0 +1,61 @@
+/* Container for the entire Schedule Tab */
+.schedule-tab-container {
+  max-width: 1000px; /* Increase the overall width */
+  margin: 0 auto;
+}
+
+/* Grid layout for the 2-week calendar view (7 columns) */
+.calendar-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+/* Individual calendar cells */
+.calendar-cell {
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
+}
+
+/* Date displayed within each calendar cell */
+.calendar-date {
+  margin-bottom: 5px !important;
+  font-size: 1rem !important;
+  font-weight: bold !important;
+}
+
+/* Style for days with scheduled shifts */
+.shift-day {
+  background-color: #e0f7fa;
+  border-bottom: 6px solid #00796b;
+}
+
+/* Style for the selected date */
+.selected-day {
+  background-color: #c5cae9;
+  border-top: 6px solid #3f51b5;
+}
+
+/* Shift indicator within each cell */
+.shift-indicator {
+  color: #333;
+}
+
+/* Shift details container */
+.shift-details {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+/* Individual shift card for detailed view */
+.shift-card {
+  padding: 5px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+}
