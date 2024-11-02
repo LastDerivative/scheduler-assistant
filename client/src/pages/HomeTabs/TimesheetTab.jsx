@@ -75,7 +75,7 @@ const TimesheetTab = ({ shifts }) => {
   }, 0);
 
   return (
-    <Box className="timesheet-tab" sx={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+    <Box className="timesheet-tab" sx={{ maxWidth: '1000px', margin: '0 auto', padding: '0px' }}>
       <Typography variant="h4" gutterBottom fontSize="2rem">Timesheet for the Last Two Weeks</Typography>
 
       {/* Display a warning if there are any shifts missing punchIn or punchOut data */}

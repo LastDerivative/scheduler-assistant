@@ -136,7 +136,7 @@ const Punches = ({ shifts }) => {
 
   return (
     <Box className="punches-container">
-      <Typography variant="h4" gutterBottom>Punches</Typography>
+      <Typography variant="h4" >Punches</Typography>
 
       {punchStatus && (
         <Chip
@@ -160,7 +160,7 @@ const Punches = ({ shifts }) => {
           )}
         </Box>
       ) : (
-        <Typography variant="body1" className="shift-details">No shifts scheduled for today.</Typography>
+        <Typography variant="body1" fontSize= "2rem" className="shift-details">No shifts scheduled for today.</Typography>
       )}
 
       {/* Punch in and Punch out buttons */}

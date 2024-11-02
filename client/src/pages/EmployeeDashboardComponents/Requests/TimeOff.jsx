@@ -80,21 +80,21 @@ const TimeOff = ({ employeeID }) => {
 
         {/* Display a table of existing time-off requests or a message if none exist */}
         {requests.length > 0 ? (
-          <TableContainer component={Paper}>
-            <Table>
+          <TableContainer component={Paper} >
+            <Table >
               <TableHead>
                 <TableRow>
-                  <TableCell className='bold-header'>Start Date</TableCell>
-                  <TableCell className='bold-header'>End Date</TableCell>
-                  <TableCell className='bold-header'>Status</TableCell>
+                  <TableCell className='bold-header' sx={{ fontSize: '1.1rem', padding: '16px' }}>Start Date</TableCell>
+                  <TableCell className='bold-header' sx={{ fontSize: '1.1rem', padding: '16px' }}>End Date</TableCell>
+                  <TableCell className='bold-header' sx={{ fontSize: '1.1rem', padding: '16px' }}>Status</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {requests.map((request) => (
                   <TableRow key={request._id}>
-                    <TableCell>{dayjs(request.timeOffStart).format("MM/DD/YYYY")}</TableCell>
-                    <TableCell>{dayjs(request.timeOffEnd).format("MM/DD/YYYY")}</TableCell>
-                    <TableCell>{request.status}</TableCell>
+                    <TableCell sx={{ fontSize: '1rem', padding: '12px' }}>{dayjs(request.timeOffStart).format("MM/DD/YYYY")}</TableCell>
+                    <TableCell sx={{ fontSize: '1rem', padding: '12px' }}>{dayjs(request.timeOffEnd).format("MM/DD/YYYY")}</TableCell>
+                    <TableCell sx={{ fontSize: '1rem', padding: '12px' }}>{request.status}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
