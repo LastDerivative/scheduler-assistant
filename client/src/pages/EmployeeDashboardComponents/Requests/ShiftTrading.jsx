@@ -18,36 +18,36 @@ const ShiftTrading = ({ employeeID }) => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
+  const fetchShiftTrades = async () => {
+    try {
+      // Fetch shift trade requests
+      const response = await axios.get(`/employees/${employeeID}/employeeRequests/shiftTrades`);
+      const trades = response.data;
+
+      // Fetch and add shift names for each shift in the trade data
+      const updatedTrades = await Promise.all(
+        trades.map(async (trade) => {
+          // Fetch names for both shifts involved in the trade
+          const shiftToTradeName = await fetchShiftName(trade.shiftToTradeID);
+          const desiredShiftName = await fetchShiftName(trade.desiredShiftID);
+
+          // Return a new object with the shift names included
+          return {
+            ...trade,
+            shiftToTradeName,
+            desiredShiftName,
+          };
+        })
+      );
+
+      // Update state with trades that include shift names
+      setShiftTrades(updatedTrades);
+    } catch (err) {
+      setError("Failed to load existing shift trades.");
+    }
+  };
+
   useEffect(() => {
-    const fetchShiftTrades = async () => {
-      try {
-        // Fetch shift trade requests
-        const response = await axios.get(`/employees/${employeeID}/employeeRequests/shiftTrades`);
-        const trades = response.data;
-
-        // Fetch and add shift names for each shift in the trade data
-        const updatedTrades = await Promise.all(
-          trades.map(async (trade) => {
-            // Fetch names for both shifts involved in the trade
-            const shiftToTradeName = await fetchShiftName(trade.shiftToTradeID);
-            const desiredShiftName = await fetchShiftName(trade.desiredShiftID);
-
-            // Return a new object with the shift names included
-            return {
-              ...trade,
-              shiftToTradeName,
-              desiredShiftName,
-            };
-          })
-        );
-
-        // Update state with trades that include shift names
-        setShiftTrades(updatedTrades);
-      } catch (err) {
-        setError("Failed to load existing shift trades.");
-      }
-    };
-
     fetchShiftTrades();
   }, [employeeID]);
 
@@ -77,8 +77,8 @@ const ShiftTrading = ({ employeeID }) => {
 
       if (response.status === 201) {
         setSuccessMessage("Shift trade request submitted successfully!");
-        setShiftTrades([...shiftTrades, response.data]);
         handleCloseModal();
+        fetchShiftTrades();
       } else {
         setError("Failed to submit your shift trade request.");
       }
@@ -105,17 +105,17 @@ const ShiftTrading = ({ employeeID }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell className='bold-header'>Shift to Trade</TableCell>
-                <TableCell className='bold-header'>Desired Shift</TableCell>
-                <TableCell className='bold-header'>Status</TableCell>
+                <TableCell className='bold-header' sx={{ fontSize: '1.1rem', padding: '16px' }}>Shift to Trade</TableCell>
+                <TableCell className='bold-header' sx={{ fontSize: '1.1rem', padding: '16px' }}>Desired Shift</TableCell>
+                <TableCell className='bold-header' sx={{ fontSize: '1.1rem', padding: '16px' }}>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {shiftTrades.map((trade) => (
                 <TableRow key={trade._id}>
-                  <TableCell>{trade.shiftToTradeName}</TableCell>
-                  <TableCell>{trade.desiredShiftName}</TableCell>
-                  <TableCell>{trade.status}</TableCell>
+                  <TableCell sx={{ fontSize: '1rem', padding: '12px' }}>{trade.shiftToTradeName}</TableCell>
+                  <TableCell sx={{ fontSize: '1rem', padding: '12px' }}>{trade.desiredShiftName}</TableCell>
+                  <TableCell sx={{ fontSize: '1rem', padding: '12px' }}>{trade.status}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -139,7 +139,7 @@ const ShiftTrading = ({ employeeID }) => {
           </Box>
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
-              label="Shift to Trade"
+              label="ID of Shift to Trade"
               value={shiftToTrade}
               onChange={(e) => setShiftToTrade(e.target.value)}
               fullWidth
@@ -147,7 +147,7 @@ const ShiftTrading = ({ employeeID }) => {
               margin="normal"
             />
             <TextField
-              label="Desired Shift"
+              label="ID of Desired Shift"
               value={desiredShift}
               onChange={(e) => setDesiredShift(e.target.value)}
               fullWidth

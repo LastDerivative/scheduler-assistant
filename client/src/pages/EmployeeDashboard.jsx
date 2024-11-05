@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Box, Button, Paper } from '@mui/material';
 import './EmployeeDashboard.css';
 // Components
 import Requests from './EmployeeDashboardComponents/Requests/Requests';
 import Punches from './EmployeeDashboardComponents/Punches';
+import Profile from './EmployeeDashboardComponents/Profile';
+import Sidebar from './EmployeeDashboardComponents/Sidebar';
+
 import TimesheetTab from './HomeTabs/TimesheetTab';
 import ScheduleTab from './HomeTabs/ScheduleTab';
 import DashboardTab from './HomeTabs/DashboardTab';
+
 
 // Format date as "Month Day, Year"
 const formatDate = (date) => {
@@ -136,14 +141,13 @@ const EmployeeDashboard = () => {
 
   return (
     <div className="dashboard-container">
+      {/* Sidebar */}
       <div className="sidebar">
-        <ul>
-          <li onClick={() => handleSidebarClick('home')}>Home</li>
-          <li onClick={() => handleSidebarClick('punch')}>ClockIn/Out</li>
-          <li onClick={() => handleSidebarClick('request')}>Request</li>
-          <li onClick={() => handleSidebarClick('profile')}>Profile</li>
-          <li onClick={handleLogout}>Logout</li>
-        </ul>
+        <Sidebar
+          activeSidebarView={activeSidebarView}
+          onSidebarClick={handleSidebarClick}
+          onLogout={handleLogout}
+        />
       </div>
 
       <div className="main-content">
@@ -180,16 +184,9 @@ const EmployeeDashboard = () => {
             </div>
           </div>
         )}
-
+        
         {/* Render Content for Other Sidebar Views */}
-        {activeSidebarView === 'profile' && (
-          <div>
-            <h1>Your Profile Information</h1>
-            <p>Name: {employeeData.name}</p>
-            <p>Email: {employeeData.email}</p>
-            <p>Phone Number: {employeeData.phoneNumber}</p>
-          </div>
-        )} 
+        {activeSidebarView === 'profile' && ( <Profile employeeData={employeeData}/>)} 
 
         {activeSidebarView === 'request' && ( <Requests employeeID={employeeId} shifts={shifts} /> )}
 

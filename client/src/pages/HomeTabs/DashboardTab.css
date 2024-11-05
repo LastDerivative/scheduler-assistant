@@ -1,25 +1,3 @@
-/* Container for the entire Dashboard Tab */
-.dashboard-tab-container {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-/* Week glance section styling */
-.week-glance {
-  margin-bottom: 10px;
-}
-
-/* Team contacts section */
-.team-contacts {
-  margin-top: 10px;
-  
-}
-
-/* Calendar container for the next 5 days */
-.calendar-container {
-  display: flex;
-  gap: 15px;
-}
 
 /* Individual day columns */
 .day-column {
@@ -32,25 +10,3 @@
   justify-content: space-between;
   transition: background-color 0.3s ease;
 }
-
-/* Date displayed within each day column */
-.calendar-date {
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-bottom: 5px;
-}
-
-/* Shift card within day columns */
-.shift-card {
-  margin-top: 5px;
-  font-size: 0.9rem;
-}
-
-/* Team contacts list styling */
-.team-contacts ul {
-  list-style-position: outside;
-  width: 40%;
-  margin: auto;
-  
-}
-
