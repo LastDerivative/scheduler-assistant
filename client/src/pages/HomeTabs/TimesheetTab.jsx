@@ -34,7 +34,8 @@ const groupShiftsByDate = (shifts) => {
   const groupedShifts = {}; // Object to hold grouped shifts by date
   const today = new Date();
   const twoWeeksAgo = new Date(today);
-  twoWeeksAgo.setDate(today.getDate() - 13); // Set date to 2 weeks ago
+  // Need to figure out the UTC time thing
+  twoWeeksAgo.setDate(today.getDate() - 14); // Set date to 2 weeks ago
 
   // Loop through each shift and group them by formatted date within the past two weeks
   shifts.forEach((shift) => {
