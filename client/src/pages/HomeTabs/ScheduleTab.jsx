@@ -66,7 +66,14 @@ const ScheduleTab = ({ shifts, scheduleDates, selectedDate, setSelectedDate }) =
             .filter(shift => formatDate(new Date(shift.startTime)) === selectedDate)
             .map((shift) => (
               <Paper key={shift._id} className="shift-card" elevation={2}>
-                <Typography><strong>Shift Name:</strong> {shift.shiftName}</Typography>
+                <Typography>
+                  <strong>Shift Name:</strong> {shift.shiftName}
+                </Typography>
+
+                <Typography>
+                  <strong>Shift ID:</strong> {shift._id}
+                </Typography>
+
                 <Typography>
                   <strong>Time:</strong> {new Date(shift.startTime).toLocaleTimeString()} - {new Date(shift.endTime).toLocaleTimeString()}
                 </Typography>

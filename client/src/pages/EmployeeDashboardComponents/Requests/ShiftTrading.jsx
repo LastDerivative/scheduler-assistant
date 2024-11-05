@@ -139,7 +139,7 @@ const ShiftTrading = ({ employeeID }) => {
           </Box>
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
-              label="Shift to Trade"
+              label="ID of Shift to Trade"
               value={shiftToTrade}
               onChange={(e) => setShiftToTrade(e.target.value)}
               fullWidth
@@ -147,7 +147,7 @@ const ShiftTrading = ({ employeeID }) => {
               margin="normal"
             />
             <TextField
-              label="Desired Shift"
+              label="ID of Desired Shift"
               value={desiredShift}
               onChange={(e) => setDesiredShift(e.target.value)}
               fullWidth

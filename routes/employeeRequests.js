@@ -9,7 +9,7 @@ router.post('/new', async (req, res) => {
 
         // If time-off is provided, check for overlapping requests
         if (timeOffStart && timeOffEnd) {
-            if (timeOffStart >= timeOffEnd) {
+            if (timeOffStart > timeOffEnd) {
                 return res.status(400).send({ error: 'Invalid time-off range provided' });
             }
 
