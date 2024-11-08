@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Box, Button, Paper } from '@mui/material';
 import './EmployeeDashboard.css';
 // Components
 import Requests from './EmployeeDashboardComponents/Requests/Requests';
@@ -136,7 +135,7 @@ const EmployeeDashboard = () => {
     //TODO: Clear Auth Token
 
     // Redirect the user to the login page
-    navigate('/home');
+    navigate('/login');
   };
 
   return (

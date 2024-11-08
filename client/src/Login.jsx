@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
+import { Box, TextField, Button, Typography } from '@mui/material';
 
 const Login = () => {//holds values for email and pw, initially empty
   //1. state variables and error handling
@@ -8,10 +8,10 @@ const Login = () => {//holds values for email and pw, initially empty
   //setFormData is a function to update the state as the user types -> state in this case is formData
   const [formData, setFormData] = useState({ 
     email: '', 
-    password: '' });
+    password: '' 
+  });
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
   //2. function to handle changes to form inputs
   //event handler called when an "onChange" event happens. e is the event object
   //will update formData, above.
@@ -21,7 +21,6 @@ const Login = () => {//holds values for email and pw, initially empty
       [e.target.name]: e.target.value,//dynamically update the right name field
     });
   };
-
   //3. function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +38,6 @@ const Login = () => {//holds values for email and pw, initially empty
       if (response.ok) {
         // Assuming the response includes employeeId and a token
         const { employeeId } = data;
-  
         // Navigate to the employee dashboard using employeeId
         navigate(`/dashboard/${employeeId}`);
       } else {
@@ -53,41 +51,119 @@ const Login = () => {//holds values for email and pw, initially empty
   };
 
   return (
+    
+    <Box 
+      display="flex" 
+      justifyContent="center" 
+      alignItems="center" 
+      minHeight="100vh"
+      sx={{
+        background: 'linear-gradient(to right, #86bcdb, #FFFFFF)',
+      }}
+    >
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+        maxWidth="800px"
+        width="100%"
+        p={3}
+        boxShadow={3}
+        bgcolor="white"
+        borderRadius="15px"
+      >
+        {/* Left section with form */}
+        <Box width="40%" p={3}>
+          <Typography 
+            variant="h4" 
+            gutterBottom
+            sx={{
+              
+              color: '#3f51b5',  // Custom color for the title
+              fontSize: '2.5rem', // Larger font size
+              fontFamily: "'Roboto', sans-serif", // Custom font
+              fontWeight: 'bold'
+            }}
+          >
+            Welcome Back to
+            <span style={{ fontSize: '2.5rem', color: '#9d5cc0', fontWeight: 'bold'}}> Scheduling</span>
+          </Typography>
+          <Typography variant="subtitle1" color="textSecondary">
+            Please login to use the Scheduler
+          </Typography>
 
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          {/* <label>Email:</label> */}
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
+          <Box 
+            component="form" 
+            onSubmit={handleSubmit} 
+            sx={{ width: '100%' }}
+          >
+            <TextField
+              label="Enter E-mail"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              fullWidth
+              required
+              margin="dense"
+              variant="outlined"
+            />
+            <TextField
+              label="Enter Password"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              fullWidth
+              required
+              margin="dense"
+              variant="outlined"
+            />
+            <Button 
+              type="submit" 
+              fullWidth
+              
+              sx={{ 
+                mt: 1.5, 
+                py: 1.5, 
+                fontWeight: 'bold',
+                background: 'linear-gradient(45deg, #3f51b5, #7C97D4)',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #3645a0, #6e85c0)', // Slightly darker shade for hover effect
+                },
+                color: 'white' 
+              }}
+            >
+              SIGN IN
+            </Button>
+          </Box>
+          {error && (
+            <Typography color="error" sx={{ mt: 2 }}>
+              {error}
+            </Typography>
+          )}
+
+          {/* Sign up prompt */}
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            Don't have an account?{' '}
+            <Link to="/register" style={{ fontWeight: 'bold', color: '#3f51b5', textDecoration: 'none' }}>
+              Sign Up
+            </Link>
+          </Typography>
+
+        </Box>
+
+        {/* Right section with illustration */}
+        <Box width="50%" display={{ xs: 'none', sm: 'block' }}>
+          <img
+            src='src/An.webp' // Path
+            
+            style={{ width: '100%', borderRadius: '10px' }}
           />
-        </div>
-        <div>
-          {/* <label>Email:</label> */}
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <div>
-        <nav>
-          <Link to="/register">Sign Up</Link>
-        </nav>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
