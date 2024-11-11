@@ -1,8 +1,8 @@
 /*TODO: Adust dont based on screen size? */
 .dashboard-container {
-  display: flex;
-  height: 100vh;
+  display: block;
   font-family: Arial, sans-serif;
+  place-items: center;
 }
 
 /*
@@ -43,9 +43,12 @@
 */
 
 .main-content {
-  /*margin-left: 150px;*/
-  padding: 25px;
+  margin-left: 150px;
+  padding: 50px;
   /*width: calc(100% - 250px);*/
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   
 }
   

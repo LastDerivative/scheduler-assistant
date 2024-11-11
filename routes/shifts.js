@@ -113,15 +113,6 @@ router.put('/:id', async (req, res) => {
             return res.status(404).send({ error: 'Shift not found' });
         }
 
-        /* endTime is now manually entered
-        // If startTime or duration is being updated, recalculate endTime
-        if (updateData.startTime || updateData.duration) {
-            const newStartTime = updateData.startTime ? new Date(updateData.startTime) : existingShift.startTime;
-            const newDuration = updateData.duration !== undefined ? updateData.duration : existingShift.duration;
-            updateData.endTime = new Date(newStartTime.getTime() + newDuration * 60 * 60 * 1000);
-        }
-            */
-
         // If employeeID is provided or being updated, check for overlapping shifts
         if (updateData.employeeID || updateData.startTime || updateData.endTime) {
             const employeeID = updateData.employeeID || existingShift.employeeID;// new ID or current
@@ -158,6 +149,55 @@ router.put('/:id', async (req, res) => {
         }
 
         res.send(updatedShift);
+    } catch (err) {
+        res.status(400).send({ error: err.message });
+    }
+});
+
+// Validate a shift by ID
+router.put('/:id/validate', async (req, res) => {
+    try {
+        const shiftID = req.params.id;
+        const updateData = req.body;
+
+        // Find the current shift document to compare values
+        const existingShift = await Shift.findById(shiftID);
+        if (!existingShift) {
+            return res.status(404).send({ error: 'Shift not found' });
+        }
+
+        // If employeeID is provided or being updated, check for overlapping shifts
+        if (updateData.employeeID || updateData.startTime || updateData.endTime) {
+            const employeeID = updateData.employeeID || existingShift.employeeID;// new ID or current
+            const newStartTime = updateData.startTime ? new Date(updateData.startTime) : existingShift.startTime;
+            const newEndTime = updateData.endTime ? new Date(updateData.endTime) : existingShift.endTime;
+
+            const overlappingShift = await Shift.findOne({
+                _id: { $ne: shiftID },  // Exclude the current shift being updated
+                employeeID: employeeID,
+                $or: [
+                    { startTime: { $lt: newEndTime, $gte: newStartTime } }, // Overlaps with the new shift's startTime
+                    { endTime: { $gt: newStartTime, $lte: newEndTime } }    // Overlaps with the new shift's endTime
+                ]
+            });
+
+            const encasingShift = await Shift.findOne({
+                _id: { $ne: shiftID },  // Exclude the current shift being updated
+                employeeID: employeeID, //looking at shifts that only the supplied user ID
+                $and: [ // will return true if startTime and endTime occur outside of the specified frame (new shift placed within an existing one)
+                    { startTime: { $lte: newStartTime } },
+                    { endTime: { $gte: newEndTime } }
+                ]
+            })
+
+            if (overlappingShift || encasingShift) {
+                return res.status(400).send({ error: 'Shift overlaps with an existing shift for this employee' });
+            }
+        }
+
+        //Super cool (returns the original shift without updating it)
+        const coolGuy = await Shift.findById(shiftID);
+        res.send(coolGuy);
     } catch (err) {
         res.status(400).send({ error: err.message });
     }
