@@ -7,11 +7,21 @@ const employeeSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     //hireDate: { type: Date, default: Date.now },
     //position: { type: String },
-    orgID: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: true },
+    orgID: { type: mongoose.Schema.Types.ObjectId, ref: 'organizations', required: true },
     managerStatus: { type: Boolean, default: false },   // Boolean for whether or not employee is a manager
     manager: { type: String, required: false },  // The employee's manager (managers may supervise themselves?)
     password: { type: String, required: true }  // Added field for password
 });
+
+// Pre-save middleware to check if orgID exists
+employeeSchema.pre('save', async function(next) {
+    const organizationExists = await Organization.exists({ _id: this.orgID });
+    if (!organizationExists) {
+      const err = new Error('Organization with the specified ID does not exist.');
+      return next(err); // Pass the error to the next middleware or handler
+    }
+    next();
+  });
 
 // Pre-save hook to hash password before saving it in the database
 employeeSchema.pre('save', async function (next) {

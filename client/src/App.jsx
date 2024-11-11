@@ -24,7 +24,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           {/* Redirects to home by default */}
-          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+          
           {/* Route for Employee Dashboard with employee ID as a parameter */}
           <Route path="/dashboard/:employeeId" element={<EmployeeDashboard />} />
         </Routes>
