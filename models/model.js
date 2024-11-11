@@ -7,7 +7,7 @@ const employeeSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     //hireDate: { type: Date, default: Date.now },
     //position: { type: String },
-    orgID: { type: mongoose.Schema.Types.ObjectId, ref: 'organizations', required: true },
+    orgID: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: true },
     managerStatus: { type: Boolean, default: false },   // Boolean for whether or not employee is a manager
     manager: { type: String, required: false },  // The employee's manager (managers may supervise themselves?)
     password: { type: String, required: true }  // Added field for password
