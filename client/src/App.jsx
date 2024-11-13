@@ -4,6 +4,7 @@ import Register from './Register'; //Register component
 import Login from './Login'; //Login component
 import Home from './pages/Home';
 import EmployeeDashboard from './pages/EmployeeDashboard';
+import ManagerDashboard from './pages/ManagerDashboard';
 import './App.css';
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
           
           {/* Route for Employee Dashboard with employee ID as a parameter */}
           <Route path="/dashboard/:employeeId" element={<EmployeeDashboard />} />
+
+          {/* Route for Manager Dashboard. Need to add manager ID as a parameter */}
+          <Route path="/dashboard/manager" element={<ManagerDashboard />} />
         </Routes>
       
       {/*<div>
