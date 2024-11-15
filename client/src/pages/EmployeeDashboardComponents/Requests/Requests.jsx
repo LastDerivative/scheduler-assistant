@@ -16,7 +16,7 @@ const Requests = ({ employeeID }) => {
   return (
     <Box className="requests-dashboard">
       {/* Dashboard title */}
-      <Typography variant="h4" gutterBottom>Employee Requests Dashboard</Typography>
+      <Typography variant="h4" gutterBottom>Employee Requests Dashboard </Typography>
 
       {/* TimeOff and ShiftTrading components displayed side by side */}
       <Box display="flex" gap={4} className="requests-sections">
