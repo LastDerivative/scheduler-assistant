@@ -1,21 +1,23 @@
 import * as React from 'react';
-import PropTypes from "prop-types";
-import Box from '@mui/material/Box';
-import { Button } from "@mui/material";
-import Stack from '@mui/material/Stack';
+import PropTypes from 'prop-types';
+import { Box, Button, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
-import { AppProvider } from '@toolpad/core/AppProvider';
-import { PageContainer } from '@toolpad/core/PageContainer';
-import { DashboardLayout } from '@toolpad/core/DashboardLayout';
+// ToolPad components
+import { AppProvider, PageContainer, DashboardLayout } from '@toolpad/core';
 import { useDemoRouter } from '@toolpad/core/internal';
+// Icons
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PunchClockIcon from '@mui/icons-material/PunchClock';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+// Dashboard components
+import MonthlyCalendar from './ManagerDashboardComponents/MonthlyCalendar';
+import MainBoard from './ManagerDashboardComponents/MainBoard.jsx';
+import Timesheet from "./ManagerDashboardComponents/Timesheet.jsx";
 
-// Every sidebar menu option
+// All sidebar menu options
 const NAVIGATION = [
     {
         kind: 'header',
@@ -97,7 +99,9 @@ function PageContent({ pathname }) {
                 textAlign: 'center',
             }}>
             <Typography>Dashboard content for {pathname}</Typography>
-
+            {pathname === '/dashboard' && <MainBoard />}
+            {pathname === '/schedule/monthly-schedule' && <MonthlyCalendar />}
+            {pathname === '/timesheet' && <Timesheet />}
         </Box>
     );
 }

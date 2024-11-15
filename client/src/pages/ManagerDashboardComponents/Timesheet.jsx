@@ -1,115 +1,37 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
-
-const columns = [
-    {   field: 'id',
-        headerName: 'Employee ID',
-        width: 110
-    },
-    {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        pinned: true,
-        width: 160,
-        valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-    },
-    {
-        field: 'sunday',
-        headerName: 'Sun',
-        type: 'datetime',
-        width: 110,
-        editable: true,
-    },
-    {
-        field: 'monday',
-        headerName: 'Mon',
-        type: 'datetime',
-        width: 110,
-        editable: true,
-    },
-    {
-        field: 'tuesday',
-        headerName: 'Tue',
-        type: 'datetime',
-        width: 110,
-        editable: true,
-    },
-    {
-        field: 'wednesday',
-        headerName: 'Wed',
-        type: 'datetime',
-        width: 110,
-        editable: true,
-    },
-    {
-        field: 'thursday',
-        headerName: 'Thu',
-        type: 'datetime',
-        width: 110,
-        editable: true,
-    },
-    {
-        field: 'friday',
-        headerName: 'Fri',
-        type: 'datetime',
-        width: 110,
-        editable: true,
-    },
-    {
-        field: 'saturday',
-        headerName: 'Sat',
-        type: 'datetime',
-        width: 110,
-        editable: true,
-    },
-    {
-        field: 'totalHours',
-        headerName: 'Total (hrs)',
-        type: 'datetime',
-        width: 110,
-        editable: true,
-        valueGetter: (value, row) => {
-            return parseInt(row.sunday) +
-                parseInt(row.monday) +
-                parseInt(row.tuesday) +
-                parseInt(row.wednesday) +
-                parseInt(row.thursday) +
-                parseInt(row.friday) +
-                parseInt(row.saturday);
-        },
-    }
-];
-
-const rows = [
-    { id: 1, lastName: 'Skywalker', firstName: 'Luke', sunday: '0:00', monday: '0:00', tuesday: '0:00', wednesday: '0:00', thursday: '0:00', friday: '0:00', saturday: '0:00' },
-    { id: 2, lastName: 'Tano', firstName: 'Ahsoka', sunday: '0:00', monday: '0:00', tuesday: '0:00', wednesday: '0:00', thursday: '0:00', friday: '0:00', saturday: '0:00' },
-    { id: 3, lastName: 'Kenobi', firstName: 'Obi-Wan', sunday: '0:00', monday: '0:00', tuesday: '0:00', wednesday: '0:00', thursday: '0:00', friday: '0:00', saturday: '0:00' },
-    { id: 4, lastName: 'Organa', firstName: 'Leia', sunday: '0:00', monday: '0:00', tuesday: '0:00', wednesday: '0:00', thursday: '0:00', friday: '0:00', saturday: '0:00' },
-    { id: 5, lastName: 'Djarin', firstName: 'Din', sunday: '0:00', monday: '0:00', tuesday: '0:00', wednesday: '0:00', thursday: '0:00', friday: '0:00', saturday: '0:00' },
-];
+import { useState } from "react";
+import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
+import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
 
 const Timesheet = () => {
+    // Row Data: The data to be displayed.
+    const [rowData, setRowData] = useState([
+        { make: "Tesla", model: "Model Y", price: 64950, electric: true },
+        { make: "Ford", model: "F-Series", price: 33850, electric: false },
+        { make: "Toyota", model: "Corolla", price: 29600, electric: false },
+    ]);
+
+    // Column Definitions: Defines the columns to be displayed.
+    const [colDefs, setColDefs] = useState([
+        { field: "make" },
+        { field: "model" },
+        { field: "price" },
+        { field: "electric" }
+    ]);
+
     return (
-        <Box sx={{ height: '100%', width: '900px' }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: {
-                            pageSize: 5,
-                        },
-                    },
-                }}
-                pageSizeOptions={[5]}
-                checkboxSelection
-                disableRowSelectionOnClick
+        // wrapping container with theme & size
+        <div
+            className="ag-theme-quartz-dark" // applying the Data Grid theme
+            style={{ height: 500, width: 1150 }} // the Data Grid will fill the size of the parent container
+        >
+            <AgGridReact
+                rowData={rowData}
+                columnDefs={colDefs}
             />
-        </Box>
-    )
-};
+        </div>
+    );
+}
 
 export default Timesheet;
