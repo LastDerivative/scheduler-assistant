@@ -10,7 +10,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@mui/x-data-grid": "^7.22.2",
+    "@mui/x-date-pickers": "^7.22.2",
     "bcryptjs": "^2.4.3",
+    "dayjs": "^1.11.13",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.3"
