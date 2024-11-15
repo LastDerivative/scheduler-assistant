@@ -12,15 +12,6 @@ function App() {
     <Router>
        {/*Define all routes */}
         <Routes>
-          {/*<Route
-            path="/"
-            element={
-              <div className="title-card">
-                <p>Welcome to your</p>
-                <h1>Job Scheduler</h1>
-              </div>
-            }
-          />*/}
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -33,12 +24,6 @@ function App() {
           {/* Route for Manager Dashboard. Need to add manager ID as a parameter */}
           <Route path="/dashboard/manager" element={<ManagerDashboard />} />
         </Routes>
-      
-      {/*<div>
-        <nav>
-          {/* <Link to="/">Home</Link> | <Link to="/register">Sign Up</Link> | <Link to="/login">Login</Link>
-        </nav>
-      </div>*/}
     </Router>
   );
 }

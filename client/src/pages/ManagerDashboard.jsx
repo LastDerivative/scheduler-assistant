@@ -14,7 +14,6 @@ import PunchClockIcon from '@mui/icons-material/PunchClock';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Timesheet from './ManagerDashboardComponents/Timesheet.jsx';
 
 // Every sidebar menu option
 const NAVIGATION = [
@@ -98,7 +97,7 @@ function PageContent({ pathname }) {
                 textAlign: 'center',
             }}>
             <Typography>Dashboard content for {pathname}</Typography>
-            
+
         </Box>
     );
 }
