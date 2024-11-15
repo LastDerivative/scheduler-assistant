@@ -3,7 +3,7 @@
 .day-column {
   padding: 15px;
   text-align: center;
-  cursor: pointer;
+  /*cursor: pointer;*/
   min-height: 120px;
   display: flex;
   flex-direction: column;

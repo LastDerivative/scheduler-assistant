@@ -191,7 +191,7 @@ const Register = () => {
         {/* Link to Login page */}
         <Typography variant="body2" align="center" sx={{ mt: 2 }}>
           Already have an account?{' '}
-          <Link to="/login" style={{ fontWeight: 'bold', color: '#3f51b5', textDecoration: 'none' }}>
+          <Link to="/sign-in" style={{ fontWeight: 'bold', color: '#3f51b5', textDecoration: 'none' }}>
             Sign In
           </Link>
         </Typography>
