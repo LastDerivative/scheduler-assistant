@@ -98,7 +98,7 @@ function PageContent({ pathname }) {
                 alignItems: 'center',
                 textAlign: 'center',
             }}>
-            <Typography>Dashboard content for {pathname}</Typography>
+            <Typography variant="h4">{pathname.toUpperCase().slice(1)}</Typography>
             {pathname === '/dashboard' && <MainBoard />}
             {pathname === '/schedule/monthly-schedule' && <MonthlyCalendar />}
             {pathname === '/timesheet' && <Timesheet />}
