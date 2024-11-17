@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5173',
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000', // Fallback for development
 });
 
 // Add a request interceptor to include the token in all requests
