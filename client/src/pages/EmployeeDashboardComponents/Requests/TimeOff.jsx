@@ -11,10 +11,10 @@ import { Box, Button, Alert, Modal, Table, TableBody, TableCell, TableContainer,
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // Libraries for making API requests and working with dates
-import axios from 'axios';
 import dayjs from 'dayjs'; // Date library for formatting dates and handling date manipulation
 import CloseIcon from '@mui/icons-material/Close';
 import './RequestsStyles.css';
+import axiosInstance from '../../../axiosInstance';
 
 const TimeOff = ({ employeeID }) => {
   // State for tracking time-off requests, form input values, modal status, and messages
@@ -29,7 +29,7 @@ const TimeOff = ({ employeeID }) => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get(`/employees/${employeeID}/employeeRequests/timeOff`);
+        const response = await axiosInstance.get(`/employees/${employeeID}/employeeRequests/timeOff`);
         setRequests(response.data); // Save fetched requests to state
       } catch (err) {
         setError("Failed to load existing time-off requests."); // Display error if data loading fails
@@ -42,7 +42,7 @@ const TimeOff = ({ employeeID }) => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevents default form submission behavior
     try {
-      const response = await axios.post(`/employeeRequests/new`, {
+      const response = await axiosInstance.post(`/employeeRequests/new`, {
         employeeID, // ID of the employee submitting the request
         requestType: "time-off", // Type of request
         timeOffStart: timeOffStart?.toISOString(), // Convert start date to ISO string

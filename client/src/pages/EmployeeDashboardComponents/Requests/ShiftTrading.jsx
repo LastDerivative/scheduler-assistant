@@ -6,7 +6,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Alert, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, TextField } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../../../axiosInstance';
 import CloseIcon from '@mui/icons-material/Close';
 import './RequestsStyles.css';
 
@@ -21,7 +21,7 @@ const ShiftTrading = ({ employeeID }) => {
   const fetchShiftTrades = async () => {
     try {
       // Fetch shift trade requests
-      const response = await axios.get(`/employees/${employeeID}/employeeRequests/shiftTrades`);
+      const response = await axiosInstance.get(`/employees/${employeeID}/employeeRequests/shiftTrades`);
       const trades = response.data;
 
       // Fetch and add shift names for each shift in the trade data
@@ -54,7 +54,7 @@ const ShiftTrading = ({ employeeID }) => {
   // Function to fetch the shift name by ID
   const fetchShiftName = async (shiftID) => {
     try {
-      const response = await axios.get(`/shifts/${shiftID}`);
+      const response = await axiosInstance.get(`/shifts/${shiftID}`);
       return response.data.shiftName; // using shiftName field
     } catch (err) {
       console.error("Failed to fetch shift name:", err);
@@ -66,7 +66,7 @@ const ShiftTrading = ({ employeeID }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`/employeeRequests/new`, {
+      const response = await axiosInstance.post(`/employeeRequests/new`, {
         employeeID,
         requestType: "shift-trade",
         shiftToTradeID: shiftToTrade,

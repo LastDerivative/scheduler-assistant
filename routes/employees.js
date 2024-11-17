@@ -1,9 +1,7 @@
 const express = require('express');
-const jwt = require('jsonwebtoken'); //used for tokens
 const router = express.Router();
 const { Employee, Shift, EmployeeRequest } = require('../models/model');  // Importing the Employee model
-
-const JWT_SECRET = 'testingthistoken'; // Test secret, replace with secure key in production
+const { createToken, authenticateToken } = require('../auth');
 
 // Register Route
 router.post('/register', async (req, res) => { //req holds request from sender
@@ -45,7 +43,7 @@ router.post('/login', async (req, res) => {
       } 
 
       // Generate a JWT token with temp secret to be used across app for one hour
-      const token = jwt.sign({ id: employee._id }, JWT_SECRET, { expiresIn: '1h' }); 
+      const token = createToken(employee._id);
 
       // Send the token to the organization and EmployeeId
       res.status(200).send({ employeeId: employee._id, token }); 
@@ -57,7 +55,7 @@ router.post('/login', async (req, res) => {
   }); 
 
 // Get all employees
-router.get('/all', async (req, res) => {
+router.get('/all', authenticateToken, async (req, res) => {
     try {
         const employees = await Employee.find();
         res.send(employees);
@@ -68,7 +66,7 @@ router.get('/all', async (req, res) => {
 
 // Get an employee by ID
 // TODO: Update to not return password hash
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateToken, async (req, res) => {
     try {
         const employee = await Employee.findById(req.params.id);
         if (!employee) {
@@ -81,7 +79,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Get all shifts for a given employeeID
-router.get('/:id/shifts', async (req, res) => {
+router.get('/:id/shifts', authenticateToken, async (req, res) => {
     const employeeID = req.params.id;
 
     try {
@@ -103,7 +101,7 @@ router.get('/:id/shifts', async (req, res) => {
 });
 
 // Update an employee by ID
-router.put('/:id', async (req, res) => {
+router.put('/:id', authenticateToken, async (req, res) => {
     try {
         //new true -> returns updated info AND runValidators confirms that udpates adhere to schema
         const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
@@ -117,7 +115,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete an employee by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticateToken, async (req, res) => {
     try {
         const employee = await Employee.findByIdAndDelete(req.params.id);
         if (!employee) {
@@ -130,7 +128,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // Get all time-off for a given employeeID
-router.get('/:id/employeeRequests/timeOff', async (req, res) => {
+router.get('/:id/employeeRequests/timeOff', authenticateToken, async (req, res) => {
     const employeeID = req.params.id;
 
     try {
@@ -145,7 +143,7 @@ router.get('/:id/employeeRequests/timeOff', async (req, res) => {
     }
 });
 
-router.get('/:id/employeeRequests/shiftTrades', async (req, res) => {
+router.get('/:id/employeeRequests/shiftTrades', authenticateToken, async (req, res) => {
     const employeeID = req.params.id;
 
     try {
