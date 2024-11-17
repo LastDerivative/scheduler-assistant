@@ -27,13 +27,14 @@ app.use(express.static(path.join(__dirname, 'client/dist')));
 
 // Catch-all route for serving the front-end app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
 });
 
-// Basic route to test the server (optional, can be removed)
+/*
 app.get('/api', (req, res) => {
   res.send('Scheduler Assistant Backend'); // Response message
 });
+*/
 
 // Sets port number for server depending on below OR
 const PORT = process.env.PORT || 3000;
