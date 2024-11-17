@@ -162,7 +162,7 @@ const Login = () => {//holds values for email and pw, initially empty
         {/* Right section with illustration */}
         <Box width="50%" display={{ xs: 'none', sm: 'block' }}>
           <img
-            src='src/An.webp' // Path
+            src='/An.webp' // Path for public folder
             
             style={{ width: '100%', borderRadius: '10px' }}
           />
