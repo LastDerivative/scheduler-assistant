@@ -91,7 +91,7 @@ function PageContent({ pathname, shifts, dashboardDates, scheduleDates, employee
             {pathname === '/schedule' && <ScheduleTab shifts={shifts} scheduleDates={scheduleDates} />}
             {pathname === '/schedule/requests' && <Requests employeeID ={employeeId}/>}
             {pathname === '/schedule/timesheet' && <TimesheetTab shifts={shifts} />}
-            {pathname === '/punch' && <Punches shifts={shifts} />}
+            {pathname === '/punch' && <Punches employeeId ={employeeId}/>}
             {pathname === '/profile' && <Profile employeeData={employeeData}/>}
             
             
