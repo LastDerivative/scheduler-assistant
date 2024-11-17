@@ -1,6 +1,6 @@
 /**
  * Sidebar: Renders a sidebar with navigation items for the employee dashboard.
- */
+ 
 import React from 'react';
 import { Drawer, List, ListItem, ListItemButton, ListItemText, Divider, ListItemIcon } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
@@ -99,3 +99,4 @@ const Sidebar = ({ activeSidebarView, onSidebarClick, onLogout }) => {
 };
 
 export default Sidebar;
+*/

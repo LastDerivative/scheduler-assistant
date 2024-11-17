@@ -3,24 +3,27 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #333; /* Darker background */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Stronger shadow for dark mode */
+    color: #ddd; /* Light text color for readability */
 }
 
 /* Specific container styling for TimeOff and ShiftTrades */
 .timeoff-container {
-    background-color: #f9f9f9;
+    background-color: #424242; /* Darker background */
 }
 
 .shifttrade-container {
-    background-color: #eef9ff; /* Slightly different color for shift trades */
+    background-color: #3a3a3a; /* Slightly different dark color */
 }
 
 /* Styles for each request chip displayed in the list */
 .request-chip {
     margin: 5px 5px 10px 0;
     font-size: 0.9rem;
+    background-color: #555; /* Dark background */
+    color: #ddd; /* Light text */
 }
 
 /* Modal container for new request forms */
@@ -30,13 +33,14 @@
     left: 50%;
     transform: translate(-35%, -40%);
     width: 400px;
-    background-color: #ffffff;
+    background-color: #424242; /* Dark background */
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); /* Stronger shadow for dark mode */
     padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    color: #ddd; /* Light text color */
 }
 
 /* Form styling inside the modal */
@@ -49,21 +53,26 @@
 /* Success and error alerts */
 .alert-message {
     margin-top: 15px;
+    color: #ddd; /* Light color for alert text */
+    background-color: #555; /* Dark background for alerts */
 }
 
 /* "New Request" buttons */
 .new-request-button {
     margin-top: 16px;
     align-self: flex-start;
+    color: white; /* Light text for contrast */
 }
 
 /* Specific styles for "New Time-Off Request" and "New Shift Trade Request" buttons */
 .timeoff-button {
-    background-color: #c8e6c9;
+    background-color: #81c784; /* Dark green for Time-Off */
+    color: white;
 }
 
 .shifttrade-button {
-    background-color: #b3e5fc;
+    background-color: #4fc3f7; /* Dark blue for Shift Trade */
+    color: white;
 }
 
 /* Dim the submit button when disabled */
@@ -75,21 +84,24 @@ button[disabled] {
 /* Close button styling for modal header */
 .close-button {
     align-self: flex-end;
+    color: #ddd; /* Light color for the close icon */
 }
 
 /* Table styling */
 .table-container {
     margin-top: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #333; /* Dark background for the table */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Darker shadow */
 }
 
 /* Header styling */
 .bold-header {
     font-weight: bold !important;
+    color: #ddd; /* Light color for table headers */
 }
 
 /* Additional hover effect on request chips for better UX */
 .request-chip:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.1); /* Lighter hover effect */
     cursor: pointer;
 }
