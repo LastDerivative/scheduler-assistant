@@ -5,40 +5,11 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Card, CardContent } from "@mui/material";
+import { Button, Card, CardContent } from "@mui/material";
+import Timesheet from './Timesheet.jsx';
 
-const data = [
-    {
-        title: 'Users',
-        value: '14k',
-        interval: 'Last 30 days',
-        trend: 'up',
-        data: [
-            200, 24, 220, 260, 240, 380, 100, 240, 280, 240, 300, 340, 320, 360, 340, 380,
-            360, 400, 380, 420, 400, 640, 340, 460, 440, 480, 460, 600, 880, 920,
-        ],
-    },
-    {
-        title: 'Conversions',
-        value: '325',
-        interval: 'Last 30 days',
-        trend: 'down',
-        data: [
-            1640, 1250, 970, 1130, 1050, 900, 720, 1080, 900, 450, 920, 820, 840, 600, 820,
-            780, 800, 760, 380, 740, 660, 620, 840, 500, 520, 480, 400, 360, 300, 220,
-        ],
-    },
-    {
-        title: 'Event count',
-        value: '200k',
-        interval: 'Last 30 days',
-        trend: 'neutral',
-        data: [
-            500, 400, 510, 530, 520, 600, 530, 520, 510, 730, 520, 510, 530, 620, 510, 530,
-            520, 410, 530, 520, 610, 530, 520, 610, 530, 420, 510, 430, 520, 510,
-        ],
-    },
-];
+const currDate = new Date().toLocaleDateString();
+const currTime = new Date().toLocaleTimeString();
 
 const widgets = [
     {
@@ -57,20 +28,58 @@ const widgets = [
 
 const MainBoard = () => {
     return (
-        <Box sx={{ py: 1, width: '100%', maxWidth: { sm: '100%' } }}>
-            {/* cards */}
-            <Grid
-                container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}
-            >
-                {widgets.map((card, index) => (
-                    <Grid key={index} size={{ xs: 12, sm: 6, lg: 3 }}>
-                        <Card variant="outlined" sx={{ height: '100%', flexGrow: 1 }}>
-                            <h>{card.title}</h>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
-        </Box>
+        <>
+            <Box sx={{
+                py: 2,
+                width: '100%',
+                maxWidth: 1100,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+                gap: 4,
+            }}>
+                <Card variant="outlined">
+                    <CardContent>
+                        <Typography color="primary"
+                                    level="title-lg"
+                                    sx={{ fontSize: 20 }}
+                                    >Date & Time</Typography>
+                        <Typography level="body-md">{currDate}</Typography>
+                        <Typography level="body-md">{currTime}</Typography>
+                    </CardContent>
+                </Card>
+
+                <Card variant="outlined">
+                    <CardContent>
+                        <Typography color="primary"
+                                    level="title-lg"
+                                    sx={{ fontSize: 20 }}>Today&apos;s Staff Count</Typography>
+                        <Button variant="contained" color="primary" size="sm">
+                            5
+                        </Button>
+                    </CardContent>
+                </Card>
+
+                <Card variant="outlined">
+                    <CardContent>
+                        <Typography color="primary"
+                                    level="title-lg"
+                                    sx={{ fontSize: 20 }}>Pending Requests</Typography>
+                        <Typography>Should display a preview for shift trade requests.</Typography>
+                    </CardContent>
+                </Card>
+
+                <Card variant="outlined">
+                    <CardContent>
+                        <Typography color="primary"
+                                    level="title-lg"
+                                    sx={{ fontSize: 20 }}>
+                            Miscellaneous
+                        </Typography>
+                        <Typography textColor="inherit">Extra card. Functionality TBD.</Typography>
+                    </CardContent>
+                </Card>
+            </Box>
+        </>
     );
 }
 

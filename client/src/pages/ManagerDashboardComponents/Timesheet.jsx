@@ -10,7 +10,7 @@ const Timesheet = () => {
     const [colDefs, setColDefs] = useState([
         { headerName: "Full Name", field: "name" },
         { headerName: "Employee ID", field: "ID" },
-        { field: "sun" },
+        { field: "sun", type: 'datetime' },
         { field: "mon" },
         { field: "tue" },
         { field: "wed" },
@@ -22,11 +22,11 @@ const Timesheet = () => {
 
     // Row Data: The data to be displayed.
     const [rowData, setRowData] = useState([
-        { name: "", ID: "", sun: "", mon: "", tue: "" , wed: "", thu: "" , fri: "", sat: "", total: ""},
-        { name: "", ID: "", sun: "", mon: "", tue: "" , wed: "", thu: "" , fri: "", sat: "", total: ""},
-        { name: "", ID: "", sun: "", mon: "", tue: "" , wed: "", thu: "" , fri: "", sat: "", total: ""},
-        { name: "", ID: "", sun: "", mon: "", tue: "" , wed: "", thu: "" , fri: "", sat: "", total: ""},
-        { name: "", ID: "", sun: "", mon: "", tue: "" , wed: "", thu: "" , fri: "", sat: "", total: ""},
+        { name: "Luke", ID: "1", sun: "0:00", mon: "0:00", tue: "0:00" , wed: "0:00", thu: "0:00" , fri: "0:00", sat: "0:00", total: "0:00"},
+        { name: "Ahsoka", ID: "2", sun: "0:00", mon: "0:00", tue: "0:00" , wed: "0:00", thu: "0:00" , fri: "0:00", sat: "0:00", total: "0:00"},
+        { name: "Obi-Wan", ID: "3", sun: "0:00", mon: "0:00", tue: "0:00" , wed: "0:00", thu: "0:00" , fri: "0:00", sat: "0:00", total: "0:00"},
+        { name: "Mace", ID: "4", sun: "0:00", mon: "0:00", tue: "0:00" , wed: "0:00", thu: "0:00" , fri: "0:00", sat: "0:00", total: "0:00"},
+        { name: "Leia", ID: "5", sun: "0:00", mon: "0:00", tue: "0:00" , wed: "0:00", thu: "0:00" , fri: "0:00", sat: "0:00", total: "0:00"},
     ]);
 
     return (
