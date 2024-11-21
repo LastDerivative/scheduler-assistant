@@ -13,6 +13,8 @@ import { useDemoRouter } from '@toolpad/core/internal';
 import { useParams, useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 
+import axiosInstance from '../axiosInstance';
+
 // Import custom components
 import Requests from './EmployeeDashboardComponents/Requests/Requests';
 import Punches from './EmployeeDashboardComponents/Punches';
@@ -20,6 +22,7 @@ import Profile from './EmployeeDashboardComponents/Profile';
 import TimesheetTab from './HomeTabs/TimesheetTab';
 import ScheduleTab from './HomeTabs/ScheduleTab';
 import DashboardTab from './HomeTabs/DashboardTab';
+import SignOut from '../SignOut';
 
 // Utility functions
 const formatDate = (date) => {
@@ -63,7 +66,7 @@ const NAVIGATION = [
      },
     { segment: 'punch', title: 'Clock In/Out', icon: <PunchClockIcon /> },
     { segment: 'profile', title: 'Profile', icon: <PersonIcon /> },
-    { segment: 'logout', title: 'Logout', icon: <LogoutIcon /> },
+    { segment: 'sign-out', title: 'Logout', icon: <LogoutIcon />   },
 ];
 
 // Define the custom theme
@@ -123,41 +126,23 @@ function EmployeeDashboard(props) {
     
 
     // Fetch Shift Data
-    React.useEffect(() => {
-        const fetchShifts = async () => {
+   React.useEffect(() => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`/employees/${employeeId}/shifts`);
-                const data = await response.json();
-                if (response.ok) {
-                    setShifts(data);
-                } else {
-                    console.error('Failed to fetch shifts data');
-                }
-            } catch (err) {
-                console.error('Error fetching shifts data', err);
+                // Fetch employee data
+                const employeeResponse = await axiosInstance.get(`/employees/${employeeId}`);
+                setEmployeeData(employeeResponse.data);
+
+                // Fetch shift data
+                const shiftsResponse = await axiosInstance.get(`/employees/${employeeId}/shifts`);
+                setShifts(shiftsResponse.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
         };
 
-        
-        const fetchEmployeeData = async () => {
-            try {
-                const response = await fetch(`/employees/${employeeId}`);
-                const data = await response.json();
-                if (response.ok) {
-                    setEmployeeData(data);
-                } else {
-                    console.error('Failed to fetch employee data');
-                }
-            } catch (err) {
-                console.error('Error fetching employee data', err);
-            }
-        };
-    
-
-          
         if (employeeId) {
-            fetchEmployeeData();
-            fetchShifts();
+            fetchData();
         }
     }, [employeeId]);
 
@@ -173,14 +158,18 @@ function EmployeeDashboard(props) {
             title: 'Scheduler',
           }}>
             <DashboardLayout>
-                {/* Main content area, renders component based on activeTab */}
-                <PageContent 
-                    pathname={router.pathname} 
-                    shifts={shifts} 
-                    dashboardDates={dashboardDates} 
-                    scheduleDates={scheduleDates}
-                    employeeData ={employeeData} 
-                    employeeId ={employeeId}/>
+                {router.pathname === '/sign-out' ? (
+                    <SignOut />
+                ) : (
+                    <PageContent
+                        pathname={router.pathname}
+                        shifts={shifts}
+                        dashboardDates={dashboardDates}
+                        scheduleDates={scheduleDates}
+                        employeeData={employeeData}
+                        employeeId={employeeId}
+                    />
+                )}
             </DashboardLayout>
         </AppProvider>
     );

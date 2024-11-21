@@ -10,6 +10,7 @@ const Login = () => {//holds values for email and pw, initially empty
     email: '', 
     password: '' 
   });
+
   const [error, setError] = useState('');
   const navigate = useNavigate();
   //2. function to handle changes to form inputs
@@ -37,7 +38,11 @@ const Login = () => {//holds values for email and pw, initially empty
   
       if (response.ok) {
         // Assuming the response includes employeeId and a token
-        const { employeeId } = data;
+        const { employeeId, token} = data;
+ 
+        // Store token and employeeId in localStorage
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('employeeId', employeeId);
         // Navigate to the employee dashboard using employeeId
         navigate(`/dashboard/${employeeId}`);
       } else {

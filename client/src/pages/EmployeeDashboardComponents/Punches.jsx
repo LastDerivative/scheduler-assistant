@@ -24,7 +24,7 @@
 //TODO: Handle more than one shift at a time?
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button, Alert, Chip } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import './PunchesStyles.css';
 
 const Punches = ({ shifts }) => {
@@ -112,7 +112,7 @@ const Punches = ({ shifts }) => {
   const handlePunchIn = async () => {
     if (!todayShift || previousShiftUnpunchedOut || tooEarlyToPunchIn || shiftAlreadyEnded) return;
     try {
-      await axios.post(`/shifts/${todayShift._id}/punch-in`); // Call the API to punch in
+      await axiosInstance.post(`/shifts/${todayShift._id}/punch-in`); // Call the API to punch in
       setPunchStatus('Punched In');
       setTodayShift({ ...todayShift, punchIn: getCurrentTime() }); // Update the local state with punch-in time
       setError(null); // Reset any previous errors
@@ -125,7 +125,7 @@ const Punches = ({ shifts }) => {
   const handlePunchOut = async () => {
     if (!todayShift || gracePeriodExpired) return; // Don't allow punch-out if grace period expired
     try {
-      await axios.post(`/shifts/${todayShift._id}/punch-out`); // Call the API to punch out
+      await axiosInstance.post(`/shifts/${todayShift._id}/punch-out`); // Call the API to punch out
       setPunchStatus('Punched Out');
       setTodayShift({ ...todayShift, punchOut: getCurrentTime() }); // Update state with punch-out time
       setError(null); // Reset any errors
