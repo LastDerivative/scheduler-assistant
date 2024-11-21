@@ -11,6 +11,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PunchClockIcon from '@mui/icons-material/PunchClock';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonIcon from '@mui/icons-material/Person';
+import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
 // Dashboard components
 import MonthlyCalendar from './ManagerDashboardComponents/MonthlyCalendar';
@@ -44,21 +45,16 @@ const NAVIGATION = [
         segment: 'schedule',
         title: 'Schedule',
         icon: <CalendarMonthIcon />,
-        children: [
-            {
-                segment: 'weekly-schedule',
-                title: 'Weekly Schedule',
-            },
-            {
-                segment: 'monthly-schedule',
-                title: 'Monthly Schedule',
-            }
-        ]
     },
     {
         segment: 'timesheet',
         title: 'Timesheet',
         icon: <PunchClockIcon />
+    },
+    {
+        segment: 'roster',
+        title: 'Roster',
+        icon: <GroupsIcon />
     },
     {
         kind: 'divider',
@@ -100,7 +96,7 @@ function PageContent({ pathname }) {
             }}>
             <Typography variant="h4">{pathname.toUpperCase().slice(1)}</Typography>
             {pathname === '/dashboard' && <MainBoard />}
-            {pathname === '/schedule/monthly-schedule' && <MonthlyCalendar />}
+            {pathname === '/schedule' && <MonthlyCalendar />}
             {pathname === '/timesheet' && <Timesheet />}
         </Box>
     );

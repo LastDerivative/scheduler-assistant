@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Button, Card, CardContent } from "@mui/material";
-import Timesheet from './Timesheet.jsx';
+import MonthlyCalendar from "./MonthlyCalendar";
 
 const currDate = new Date().toLocaleDateString();
 const currTime = new Date().toLocaleTimeString();
@@ -32,19 +32,18 @@ const MainBoard = () => {
             <Box sx={{
                 py: 2,
                 width: '100%',
-                maxWidth: 1100,
+                maxWidth: 1000,
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-                gap: 4,
+                gap: 3,
             }}>
                 <Card variant="outlined">
                     <CardContent>
                         <Typography color="primary"
                                     level="title-lg"
                                     sx={{ fontSize: 20 }}
-                                    >Date & Time</Typography>
-                        <Typography level="body-md">{currDate}</Typography>
-                        <Typography level="body-md">{currTime}</Typography>
+                                    >Clock</Typography>
+                        <Typography level="body-lg">{currTime}</Typography>
                     </CardContent>
                 </Card>
 
@@ -67,17 +66,12 @@ const MainBoard = () => {
                         <Typography>Should display a preview for shift trade requests.</Typography>
                     </CardContent>
                 </Card>
-
-                <Card variant="outlined">
+                <Card variant="outlined" sx={{ fontSize: 20, width: 400, height: 340 }}>
                     <CardContent>
-                        <Typography color="primary"
-                                    level="title-lg"
-                                    sx={{ fontSize: 20 }}>
-                            Miscellaneous
-                        </Typography>
-                        <Typography textColor="inherit">Extra card. Functionality TBD.</Typography>
+                        <MonthlyCalendar />
                     </CardContent>
                 </Card>
+
             </Box>
         </>
     );

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Luke",
+    "email": "luke@galaxy.com",
+    "orgID": "001",
+    "managerStatus": false,
+    "manager": "Obi-Wan",
+    "password": "password"
+  }
+]

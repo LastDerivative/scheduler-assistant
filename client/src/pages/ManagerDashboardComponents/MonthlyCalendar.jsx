@@ -10,12 +10,13 @@ import GroupIcon from '@mui/icons-material/Group';
 import dayjs from "dayjs";
 
 const MonthlyCalendar = () => {
-    const currDate = new Date().toLocaleDateString();
+    const today = new Date().toLocaleDateString();
+
     return (
         <Container>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar
-                    referenceDate={dayjs(currDate)}
+                    referenceDate={dayjs(today)}
                 />
             </LocalizationProvider>
         </Container>
