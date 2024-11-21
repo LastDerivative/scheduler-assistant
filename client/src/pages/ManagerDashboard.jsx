@@ -124,7 +124,9 @@ function ManagerDashboard(props) {
             router={router}
             theme={demoTheme}
             window={demoWindow}
-        >
+            branding={{
+                title: 'Scheduler',
+            }}>
             <DashboardLayout>
                 <PageContent pathname={router.pathname} />
             </DashboardLayout>

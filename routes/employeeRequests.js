@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { EmployeeRequest, Employee } = require('../models/model');  // Importing the EmployeeRequest model
-
+const { authenticateToken } = require('../auth');
 // Create a new employee request
-router.post('/new', async (req, res) => {
+router.post('/new', authenticateToken, async (req, res) => {
     try {
         const { employeeID, requestType, timeOffStart, timeOffEnd, shiftToTradeID, desiredShiftID, status, submitDate } = req.body;
 

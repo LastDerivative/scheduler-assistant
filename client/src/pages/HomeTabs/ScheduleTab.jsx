@@ -1,4 +1,3 @@
-// src/components/ScheduleTab.jsx
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Paper, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import dayjs from 'dayjs';
@@ -85,7 +84,7 @@ const ScheduleGrid = ({ shifts }) => {
             padding: '2px 8px', // Adjust padding to move text closer to the border
             height: '50px', // Fixed 50px height for each hour
             borderBottom: '1px solid #555', // Solid border for full hour
-            backgroundColor: '#1c1c1c', // Background for hour labels
+            backgroundColor: '#1c1c1c', //Background for hour labels
             color: '#ffffff',
             fontSize: '0.8rem', // Smaller font for hour labels
             position: 'relative', // Set position for half-hour dotted line

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Shift } = require('../models/model');  // Importing the Shift model
-
+const { authenticateToken } = require('../auth');
 //TODO: Test shift overlaps
 
 
@@ -102,7 +102,7 @@ router.get('/', async (req, res) => {
 });
 
 // Update a shift by ID
-router.put('/:id', async (req, res) => {
+router.put('/:id', authenticateToken, async (req, res) => {
     try {
         const shiftID = req.params.id;
         const updateData = req.body;
@@ -217,7 +217,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // Punch-In Route (POST /shifts/:id/punch-in)
-router.post('/:id/punch-in', async (req, res) => {
+router.post('/:id/punch-in', authenticateToken, async (req, res) => {
     try {
         const shiftID = req.params.id;
         const shift = await Shift.findById(shiftID);
@@ -242,7 +242,7 @@ router.post('/:id/punch-in', async (req, res) => {
 });
 
 // Punch-Out Route (POST /shifts/:id/punch-out)
-router.post('/:id/punch-out', async (req, res) => {
+router.post('/:id/punch-out', authenticateToken,  async (req, res) => {
     try {
         const shiftID = req.params.id;
         const shift = await Shift.findById(shiftID);
@@ -271,7 +271,7 @@ router.post('/:id/punch-out', async (req, res) => {
 });
 
 // Get by shiftID
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateToken, async (req, res) => {
     try {
         const shift = await Shift.findById(req.params.id);
         if (!shift) {
