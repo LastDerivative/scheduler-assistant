@@ -14,11 +14,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
 // Dashboard components
-import MonthlyCalendar from './ManagerDashboardComponents/MonthlyCalendar';
 import ShiftCalendar from './ManagerDashboardComponents/ShiftCalendar';
 import MainBoard from './ManagerDashboardComponents/MainBoard.jsx';
 import Timesheet from "./ManagerDashboardComponents/Timesheet.jsx";
-
 
 // All sidebar menu options
 const NAVIGATION = [
@@ -62,10 +60,11 @@ const NAVIGATION = [
         kind: 'divider',
     },
     {
-        segment: 'logout',
         title: 'Logout',
+        kind: 'button',
         icon: <LogoutIcon />,
-    },
+        
+    }
     ];
 
 // Dashboard color scheme
