@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { spacing, positions } from '@mui/system';
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -11,21 +10,6 @@ import MonthlyCalendar from "./MonthlyCalendar";
 const currDate = new Date().toLocaleDateString();
 const currTime = new Date().toLocaleTimeString();
 
-const widgets = [
-    {
-        title: 'forecast',
-        value: '78 degrees',
-    },
-    {
-        title: 'date',
-        value: 'november 15th',
-    },
-    {
-        title: 'headcount',
-        value: 3,
-    }
-];
-
 const MainBoard = () => {
     return (
         <>
@@ -35,7 +19,7 @@ const MainBoard = () => {
                 maxWidth: 1000,
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-                gap: 3,
+                gap: 2,
             }}>
                 <Card variant="outlined">
                     <CardContent>
@@ -66,12 +50,16 @@ const MainBoard = () => {
                         <Typography>Should display a preview for shift trade requests.</Typography>
                     </CardContent>
                 </Card>
-                <Card variant="outlined" sx={{ fontSize: 20, width: 400, height: 340 }}>
+
+                <Card variant="outlined" sx={{ alignItems: 'center', fontSize: 20, width: 390, height: 340,  }}>
                     <CardContent>
                         <MonthlyCalendar />
                     </CardContent>
                 </Card>
 
+                <Card variant="outlined" sx={{ ml:8.5, width: 593 }}>
+
+                </Card>
             </Box>
         </>
     );
