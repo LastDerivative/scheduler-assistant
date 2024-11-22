@@ -58,7 +58,10 @@ const MainBoard = () => {
                 </Card>
 
                 <Card variant="outlined" sx={{ ml:8.5, width: 593 }}>
-
+                <Typography color="primary"
+                                    level="title-lg"
+                                    sx={{ fontSize: 22, mt: 2 }}>Schedule Quickview</Typography>
+                        <Typography>Should display employee name&apos;s and the hours they're working today</Typography>
                 </Card>
             </Box>
         </>

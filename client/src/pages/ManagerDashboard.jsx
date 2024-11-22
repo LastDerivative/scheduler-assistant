@@ -15,8 +15,10 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
 // Dashboard components
 import MonthlyCalendar from './ManagerDashboardComponents/MonthlyCalendar';
+import ShiftCalendar from './ManagerDashboardComponents/ShiftCalendar';
 import MainBoard from './ManagerDashboardComponents/MainBoard.jsx';
 import Timesheet from "./ManagerDashboardComponents/Timesheet.jsx";
+
 
 // All sidebar menu options
 const NAVIGATION = [
@@ -96,7 +98,7 @@ function PageContent({ pathname }) {
             }}>
             <Typography variant="h4">{pathname.toUpperCase().slice(1)}</Typography>
             {pathname === '/dashboard' && <MainBoard />}
-            {pathname === '/schedule' && <MonthlyCalendar />}
+            {pathname === '/schedule' && <ShiftCalendar />}
             {pathname === '/timesheet' && <Timesheet />}
         </Box>
     );

@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@daypilot/daypilot-lite-react": "^3.30.0",
     "@mui/x-data-grid": "^7.22.2",
     "@mui/x-date-pickers": "^7.22.2",
     "bcryptjs": "^2.4.3",
