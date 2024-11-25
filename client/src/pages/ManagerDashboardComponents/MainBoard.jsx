@@ -1,11 +1,9 @@
 import * as React from 'react';
-import Grid from '@mui/material/Grid2';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import { Box, Container, Grid2, Stack, Typography } from '@mui/material';
 import { Button, Card, CardContent } from "@mui/material";
 import MonthlyCalendar from "./MonthlyCalendar";
+import MiniTimesheet from './MiniTimesheet';
+import LiveClock from './LiveClock';
 
 const currDate = new Date().toLocaleDateString();
 const currTime = new Date().toLocaleTimeString();
@@ -27,7 +25,7 @@ const MainBoard = () => {
                                     level="title-lg"
                                     sx={{ fontSize: 20 }}
                                     >Clock</Typography>
-                        <Typography level="body-lg">{currTime}</Typography>
+                        <LiveClock />
                     </CardContent>
                 </Card>
 
@@ -37,7 +35,7 @@ const MainBoard = () => {
                                     level="title-lg"
                                     sx={{ fontSize: 20 }}>Today&apos;s Staff Count</Typography>
                         <Button variant="contained" color="primary" size="sm">
-                            5
+                            1
                         </Button>
                     </CardContent>
                 </Card>
@@ -61,7 +59,8 @@ const MainBoard = () => {
                 <Typography color="primary"
                                     level="title-lg"
                                     sx={{ fontSize: 22, mt: 2 }}>Schedule Quickview</Typography>
-                        <Typography>Should display employee name&apos;s and the hours they're working today</Typography>
+                        <Typography>Should display employee name&apos;s and the hours they&apos;re working today</Typography>
+                        <MiniTimesheet />
                 </Card>
             </Box>
         </>

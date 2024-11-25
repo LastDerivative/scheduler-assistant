@@ -32,7 +32,7 @@ const Timesheet = () => {
     return (
         // wrapping container with theme & size
         <div
-            className="ag-theme-quartz-dark" // applying the Data Grid theme
+            className="ag-theme-quartz" // applying the Data Grid theme
             style={{ height: 280, width: 1150 }} // the Data Grid will fill the size of the parent container
         >
             <AgGridReact
