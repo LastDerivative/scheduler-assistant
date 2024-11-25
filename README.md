@@ -16,8 +16,10 @@ MongoDB (and Compass)
 - Install from [here](https://www.mongodb.com/try/download/community)
 - As of early development stages, do **not** run as a Service.
 - Installer should also include Compass for a visual interface.
-- Run 'mongod' in terminal (PC) to startup the database or,
-- 'sudo systemctl start mongod', 'sudo systemctl enable mongod', 'sudo systemctl status mongod' (Linux).
+- Run:
+    - ```mongod``` in terminal (PC) to startup the database or,
+    - ```sudo systemctl start mongod```, ```sudo systemctl enable mongod```, ```sudo systemctl status mongod``` (Linux).
+    - ```mongod --config /opt/homebrew/etc/mongod.conf --fork``` (MacOS, M-series)
 - Attempt to connect to the server on Compass at localhost:27017 to ensure it is running.
 
 Directory Setup

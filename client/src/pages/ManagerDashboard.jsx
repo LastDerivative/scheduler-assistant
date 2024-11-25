@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Stack } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 // ToolPad components
 import { AppProvider, PageContainer, DashboardLayout } from '@toolpad/core';
