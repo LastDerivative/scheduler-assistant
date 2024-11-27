@@ -38,13 +38,18 @@ const Login = () => {//holds values for email and pw, initially empty
   
       if (response.ok) {
         // Assuming the response includes employeeId and a token
-        const { employeeId, token} = data;
+        const { employeeId, token, managerStatus } = data;
  
         // Store token and employeeId in localStorage
         localStorage.setItem('authToken', token);
         localStorage.setItem('employeeId', employeeId);
-        // Navigate to the employee dashboard using employeeId
-        navigate(`/dashboard/${employeeId}`);
+
+        // Check if user is a manager and navigate accordingly
+        if (managerStatus) {
+          navigate(`/dashboard/manager/${employeeId}`);
+        } else {
+          navigate(`/dashboard/${employeeId}`);
+        }
       } else {
         // If the login failed
         setError(data.message || 'Invalid email or password. Please try again.');

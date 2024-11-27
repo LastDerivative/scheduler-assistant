@@ -16,6 +16,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ShiftCalendar from './ManagerDashboardComponents/ShiftCalendar';
 import MainBoard from './ManagerDashboardComponents/MainBoard.jsx';
 import Timesheet from "./ManagerDashboardComponents/Timesheet.jsx";
+import Profile from './ManagerDashboardComponents/Profile';
+// Custom Axios instance to make authtenticated back end calls
+import axiosInstance from '../axiosInstance';
+import SignOut from '../SignOut';
+import { useParams } from 'react-router-dom';
 
 // All sidebar menu options
 const NAVIGATION = [
@@ -59,6 +64,7 @@ const NAVIGATION = [
         kind: 'divider',
     },
     {
+        segment: 'sign-out',
         title: 'Logout',
         kind: 'button',
         icon: <LogoutIcon />,
@@ -84,7 +90,7 @@ const demoTheme = createTheme({
 });
 
 // Displays the content for each page depending on its filepath name
-function PageContent({ pathname }) {
+function PageContent({ pathname, employeeData }) {
     return (
         <Box
             sx={{
@@ -95,15 +101,17 @@ function PageContent({ pathname }) {
                 textAlign: 'center',
             }}>
             <Typography variant="h4">{pathname.toUpperCase().slice(1)}</Typography>
-            {pathname === '/dashboard' && <MainBoard />}
+            {pathname === '/dashboard' && <MainBoard employeeData={employeeData}/>}
             {pathname === '/schedule' && <ShiftCalendar />}
             {pathname === '/timesheet' && <Timesheet />}
+            {pathname === '/profile' && <Profile employeeData={employeeData}/>}
         </Box>
     );
 }
 
 PageContent.propTypes = {
     pathname: PropTypes.string.isRequired,
+    employeeData: PropTypes.object,
 };
 
 // Renders the Dashboard view
@@ -113,6 +121,28 @@ function ManagerDashboard(props) {
     const router = useDemoRouter('/dashboard');
 
     const demoWindow = window !== undefined ? window() : undefined;
+
+
+    const { employeeId } = useParams();
+    const [employeeData, setEmployeeData] = React.useState(null);
+
+    // Fetch Shift Data
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Fetch employee data
+                const employeeResponse = await axiosInstance.get(`/employees/${employeeId}`);
+                setEmployeeData(employeeResponse.data);
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        if (employeeId) {
+            fetchData();
+        }
+    }, [employeeId]);
 
     return (
         <AppProvider
@@ -124,7 +154,14 @@ function ManagerDashboard(props) {
                 title: 'Scheduler',
             }}>
             <DashboardLayout>
-                <PageContent pathname={router.pathname} />
+            {router.pathname === '/sign-out' ? (
+                    <SignOut />
+                ) : (
+                    <PageContent
+                        pathname={router.pathname}
+                        employeeData={employeeData}
+                    />
+                )}
             </DashboardLayout>
         </AppProvider>
     );

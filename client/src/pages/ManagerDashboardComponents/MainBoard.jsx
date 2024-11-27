@@ -5,10 +5,12 @@ import MonthlyCalendar from "./MonthlyCalendar";
 import MiniTimesheet from './MiniTimesheet';
 import LiveClock from './LiveClock';
 
+
 const currDate = new Date().toLocaleDateString();
 const currTime = new Date().toLocaleTimeString();
 
-const MainBoard = () => {
+// Received employeeData from ManagerDashboard
+const MainBoard = ({ employeeData }) => {
     return (
         <>
             <Box sx={{
@@ -60,7 +62,7 @@ const MainBoard = () => {
                                     level="title-lg"
                                     sx={{ fontSize: 22, mt: 2 }}>Schedule Quickview</Typography>
                         <Typography>Should display employee name&apos;s and the hours they&apos;re working today</Typography>
-                        <MiniTimesheet />
+                        <MiniTimesheet employeeData={employeeData}/>
                 </Card>
             </Box>
         </>

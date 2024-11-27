@@ -26,8 +26,11 @@ function App() {
               <EmployeeDashboard />
             </ProtectedRoute>} />
           {/* Route for Manager Dashboard. Need to add manager ID as a parameter */}
-          <Route path="/dashboard/manager" element={<ManagerDashboard />} />
-          <Route path="/mainboard" element={<MainBoard />} />
+          <Route path="/dashboard/manager/:employeeId" element={            
+            <ProtectedRoute>
+              <ManagerDashboard />
+            </ProtectedRoute>}  />
+          {/*<Route path="/mainboard" element={<MainBoard />} />*/}
           <Route path="/timesheet" element={<Timesheet />} />
 
         </Routes>
