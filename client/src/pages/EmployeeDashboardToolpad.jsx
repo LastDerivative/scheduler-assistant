@@ -86,7 +86,6 @@ function PageContent({ pathname, shifts, dashboardDates, scheduleDates, employee
                 alignItems: 'center',
                 textAlign: 'center',
             }}>
-            <Typography>Dashboard content for {pathname}</Typography>
             {pathname === '/dashboard' && <DashboardTab shifts={shifts} dashboardDates={dashboardDates} />}
             {pathname === '/schedule' && <ScheduleTab shifts={shifts} scheduleDates={scheduleDates} />}
             {pathname === '/schedule/requests' && <Requests employeeID ={employeeId}/>}
