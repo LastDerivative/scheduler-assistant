@@ -161,4 +161,33 @@ router.get('/:id/employeeRequests/shiftTrades', authenticateToken, async (req, r
         res.status(500).send({ message: 'Internal server error' });
     }
 });
+
+// Get the current or next shift for an employee
+router.get('/:id/current-shift', authenticateToken, async (req, res) => {
+    try {
+        const employeeID = req.params.id;
+        const currentTime = new Date();
+
+        // Find the current or next scheduled shift
+        const shift = await Shift.findOne({
+            employeeID,
+            $or: [
+                { startTime: { $lte: currentTime }, endTime: { $gte: currentTime } }, // Current shift
+                { startTime: { $gte: currentTime } }, // Upcoming shift
+            ],
+        }).sort({ startTime: 1 }); // Get the soonest shift
+
+        if (!shift) {
+            return res.status(404).json({ message: 'No current or upcoming shift found' });
+        }
+
+        res.status(200).json(shift);
+    } catch (error) {
+        console.error('Error fetching current shift:', error);
+        res.status(500).send({ message: 'Internal server error' });
+    }
+});
+
+
+
 module.exports = router;
