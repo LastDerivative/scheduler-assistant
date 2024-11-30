@@ -18,7 +18,7 @@ const Profile = ({ employeeData }) => {
   return (
     <Box sx={{ maxWidth: '1000px', margin: '0 auto', padding: '0px' }}>
       {/* Header Section */}
-      <Typography variant="h5" gutterBottom sx={{ fontSize: '2.5rem' }}>
+      <Typography variant="h5" gutterBottom sx={{ fontSize: '2.0rem' }}>
         Manager Info
       </Typography>
       <Typography variant="body2" sx={{ mb: 2, fontSize: '1.25rem'}}>

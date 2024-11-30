@@ -16,6 +16,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ShiftCalendar from './ManagerDashboardComponents/ShiftCalendar';
 import MainBoard from './ManagerDashboardComponents/MainBoard.jsx';
 import Timesheet from "./ManagerDashboardComponents/Timesheet.jsx";
+import Roster from './ManagerDashboardComponents/Roster.jsx';
 import Profile from './ManagerDashboardComponents/Profile';
 // Custom Axios instance to make authtenticated back end calls
 import axiosInstance from '../axiosInstance';
@@ -49,11 +50,6 @@ const NAVIGATION = [
         segment: 'schedule',
         title: 'Schedule',
         icon: <CalendarMonthIcon />,
-    },
-    {
-        segment: 'timesheet',
-        title: 'Timesheet',
-        icon: <PunchClockIcon />
     },
     {
         segment: 'roster',
@@ -90,7 +86,7 @@ const demoTheme = createTheme({
 });
 
 // Displays the content for each page depending on its filepath name
-function PageContent({ pathname, employeeData }) {
+function PageContent({ pathname, employeeData, organizationData }) {
     return (
         <Box
             sx={{
@@ -102,8 +98,8 @@ function PageContent({ pathname, employeeData }) {
             }}>
             <Typography variant="h4">{pathname.toUpperCase().slice(1)}</Typography>
             {pathname === '/dashboard' && <MainBoard employeeData={employeeData}/>}
-            {pathname === '/schedule' && <ShiftCalendar />}
-            {pathname === '/timesheet' && <Timesheet />}
+            {pathname === '/schedule' && <ShiftCalendar employeeData={employeeData}/>}
+            {pathname === '/roster' && <Roster employeeData={employeeData} organizationData={organizationData}/>}
             {pathname === '/profile' && <Profile employeeData={employeeData}/>}
         </Box>
     );
@@ -112,6 +108,7 @@ function PageContent({ pathname, employeeData }) {
 PageContent.propTypes = {
     pathname: PropTypes.string.isRequired,
     employeeData: PropTypes.object,
+    organizationData: PropTypes.object
 };
 
 // Renders the Dashboard view
@@ -124,7 +121,9 @@ function ManagerDashboard(props) {
 
 
     const { employeeId } = useParams();
+    const { organizationId } = useParams();
     const [employeeData, setEmployeeData] = React.useState(null);
+    const [organizationData, setOrganizationData] = React.useState(null);
 
     // Fetch Shift Data
     React.useEffect(() => {
@@ -144,6 +143,22 @@ function ManagerDashboard(props) {
         }
     }, [employeeId]);
 
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const orgResponse = await axiosInstance.get(`/organizations/${organizationId}`);
+                setOrganizationData(orgResponse.data);
+            }  catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        if (organizationId) {
+            fetchData();
+        }
+
+    }, [organizationId]);
+
     return (
         <AppProvider
             navigation={NAVIGATION}
@@ -160,6 +175,7 @@ function ManagerDashboard(props) {
                     <PageContent
                         pathname={router.pathname}
                         employeeData={employeeData}
+                        organizationData={organizationData}
                     />
                 )}
             </DashboardLayout>

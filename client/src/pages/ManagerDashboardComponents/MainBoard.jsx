@@ -1,13 +1,11 @@
 import * as React from 'react';
-import { Box, Container, Grid2, Stack, Typography } from '@mui/material';
+import { Badge, Box, Container, Grid2, Stack, Typography } from '@mui/material';
 import { Button, Card, CardContent } from "@mui/material";
+import MailIcon from '@mui/icons-material/Mail';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import MonthlyCalendar from "./MonthlyCalendar";
 import MiniTimesheet from './MiniTimesheet';
 import LiveClock from './LiveClock';
-
-
-const currDate = new Date().toLocaleDateString();
-const currTime = new Date().toLocaleTimeString();
 
 // Received employeeData from ManagerDashboard
 const MainBoard = ({ employeeData }) => {
@@ -35,10 +33,11 @@ const MainBoard = ({ employeeData }) => {
                     <CardContent>
                         <Typography color="primary"
                                     level="title-lg"
-                                    sx={{ fontSize: 20 }}>Today&apos;s Staff Count</Typography>
-                        <Button variant="contained" color="primary" size="sm">
-                            1
-                        </Button>
+                                    sx={{ fontSize: 20, mb: 2 }}>Today&apos;s Staff Count
+                        </Typography>
+                        <Badge badgeContent={3} color="primary">
+                            <AssignmentIndIcon color="action" fontSize='large'/>
+                        </Badge>
                     </CardContent>
                 </Card>
 
@@ -46,8 +45,10 @@ const MainBoard = ({ employeeData }) => {
                     <CardContent>
                         <Typography color="primary"
                                     level="title-lg"
-                                    sx={{ fontSize: 20 }}>Pending Requests</Typography>
-                        <Typography>Should display a preview for shift trade requests.</Typography>
+                                    sx={{ fontSize: 20, mb: 2}}>Pending Requests</Typography>
+                                    <Badge badgeContent={0} showZero color="primary">
+                                        <MailIcon color="action" fontSize='large'/>
+                                    </Badge>
                     </CardContent>
                 </Card>
 
@@ -61,7 +62,6 @@ const MainBoard = ({ employeeData }) => {
                 <Typography color="primary"
                                     level="title-lg"
                                     sx={{ fontSize: 22, mt: 2 }}>Schedule Quickview</Typography>
-                        <Typography>Should display employee name&apos;s and the hours they&apos;re working today</Typography>
                         <MiniTimesheet employeeData={employeeData}/>
                 </Card>
             </Box>

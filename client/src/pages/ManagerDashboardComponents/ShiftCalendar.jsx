@@ -1,7 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
+import { Typography } from '@mui/material';
+// To make authenticated call
+import axiosInstance from '../../axiosInstance';
 
-const ShiftCalendar = () => {
+const ShiftCalendar = ( { employeeData } ) => {
+  // Will use to get all shifts for the day by given org
+  const [shifts, setShifts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchShifts = async () => {
+        try {
+            const today = new Date().toISOString().split('T')[0]; // Current date (YYYY-MM-DD)
+            
+            const response = await axiosInstance.get(`/shifts/org/${employeeData.orgID}/shifts`, {
+                params: { date: today } // Send date
+            });
+            //console.log('Shifts for today:', response.data);
+            setShifts(response.data); // Store shifts in state
+        } catch (error) {
+            console.error('Error fetching shifts:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (employeeData?.orgID) {
+        fetchShifts();
+    }
+}, [employeeData]);
+
   const [calendar, setCalendar] = useState(null);
   const [events, setEvents] = useState([]);
   const config = {
@@ -66,11 +95,34 @@ const ShiftCalendar = () => {
 
   return (
     <div>
+      {/* renders daypilot calendar */}
       <DayPilotCalendar
         {...config}
         events={events}
         controlRef={setCalendar}
       />
+      
+      
+      {/* Render JSX based on the JSON data */}
+      {shifts.map((shift) => {
+        const employeeName = shift.employeeID ? shift.employeeID.name : 'Unassigned'; // Default for unassigned shifts
+        const totalHours =
+            (new Date(shift.endTime) - new Date(shift.startTime)) / (1000 * 60 * 60); // Calculate duration
+        const siteName = shift.siteID ? shift.siteID.siteName : 'Unknown Location'; // Default for missing site
+        const employeeID = shift.employeeID ? shift._id : 'no id';
+
+        return (
+        <div key={shift._id}>
+          <h2>{employeeName}, id:{employeeID}</h2>
+          <p>{new Date(shift.startTime).toLocaleTimeString()}</p>
+          <p>{new Date(shift.endTime).toLocaleTimeString()}</p>
+          <p>{totalHours.toFixed(2)}</p>
+          <p>{siteName}</p>
+          <p>{shifts.length}</p>
+        </div>
+        );
+      })}
+
     </div>
   );
 }

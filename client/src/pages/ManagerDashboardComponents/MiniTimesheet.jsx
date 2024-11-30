@@ -11,8 +11,6 @@ import Typography from '@mui/material/Typography';
 // To make authenticated call
 import axiosInstance from '../../axiosInstance';
 
-
-
 const MiniTimesheet = ({ employeeData }) => {
 
     // Will use to get all shifts for the day by given org
