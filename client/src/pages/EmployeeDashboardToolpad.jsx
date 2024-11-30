@@ -54,8 +54,11 @@ const getNextTwoWeeks = () => {
 
 // Sidebar Navigation options
 const NAVIGATION = [
-    { kind: 'header', title: 'Main Menu'},
+    { kind: 'header', title: 'General'},
     { segment: 'dashboard', title: 'Dashboard', icon: <DashboardIcon />},
+    { segment: 'profile', title: 'Profile', icon: <PersonIcon /> },
+    { kind: 'divider' },
+    { kind: 'header', title: 'Employee Functions'},
     { segment: 'schedule', title: 'Schedule', icon: <CalendarMonthIcon />,
         children: [
             
@@ -65,7 +68,7 @@ const NAVIGATION = [
         ]
      },
     { segment: 'punch', title: 'Clock In/Out', icon: <PunchClockIcon /> },
-    { segment: 'profile', title: 'Profile', icon: <PersonIcon /> },
+    { kind: 'divider' },
     { segment: 'sign-out', title: 'Logout', icon: <LogoutIcon />   },
 ];
 
@@ -86,7 +89,6 @@ function PageContent({ pathname, shifts, dashboardDates, scheduleDates, employee
                 alignItems: 'center',
                 textAlign: 'center',
             }}>
-            <Typography>Dashboard content for {pathname}</Typography>
             {pathname === '/dashboard' && <DashboardTab shifts={shifts} dashboardDates={dashboardDates} />}
             {pathname === '/schedule' && <ScheduleTab shifts={shifts} scheduleDates={scheduleDates} />}
             {pathname === '/schedule/requests' && <Requests employeeID ={employeeId}/>}

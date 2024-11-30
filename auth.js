@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'testingthistoken'; // Test secret, replace with secure key in production
 const REFRESH_TOKEN_SECRET = 'REFRESH_TOKEN_SECRET'; // Test secret, replace with secure key in production
 
-/* How to account for this file when testing in postamn
+/* How to account for this file when testing in postman
 Go to the "Headers" tab in Postman.
 Add the following key-value pair:
 Key: Authorization

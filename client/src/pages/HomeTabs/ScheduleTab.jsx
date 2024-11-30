@@ -35,6 +35,10 @@ const ScheduleGrid = ({ shifts }) => {
   const topOffset = dateRowHeight + currentHour * 50 + currentMinute * (50 / 60); // Adjust based on fixed date row height
 
   return (
+    <>
+    <Typography variant="h5" gutterBottom sx={{ fontSize: '2.5rem' }}>
+        Schedule
+      </Typography>
     <Box
       sx={{
         position: 'relative',
@@ -205,6 +209,7 @@ const ScheduleGrid = ({ shifts }) => {
         </DialogActions>
       </Dialog>
     </Box>
+    </>
   );
 };
 

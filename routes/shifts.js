@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Shift } = require('../models/model');  // Importing the Shift model
+const { Shift, Site } = require('../models/model');  // Importing the Shift model
 const { authenticateToken } = require('../auth');
 //TODO: Test shift overlaps
 
@@ -282,4 +282,42 @@ router.get('/:id', authenticateToken, async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 });
+
+router.get('/org/:orgId/shifts', authenticateToken, async (req, res) => {
+    const { orgId } = req.params;
+    const { date } = req.query;
+
+    if (!date) {
+        return res.status(400).send({ message: 'Date query parameter is required.' });
+    }
+
+    try {
+
+        // Find all site IDs for the organization
+        const sites = await Site.find({ orgID: orgId });
+        const siteIds = sites.map(site => site._id);
+        
+        // Calculate the UTC range for the entire day
+        const targetDate = new Date(date); // e.g., '2024-11-26'
+        const startOfDay = new Date(targetDate.setUTCHours(0, 0, 0, 0)); // 2024-11-26T00:00:00.000+00:00
+        const endOfDay = new Date(targetDate.setUTCHours(23, 59, 59, 999)); // 2024-11-26T23:59:59.999+00:00
+
+        // Find shifts that start the given day
+        const shifts = await Shift.find({
+            siteID: { $in: siteIds },
+            startTime: { $gte: startOfDay, $lte: endOfDay }
+        }).populate('siteID').populate('employeeID');
+
+        if (!shifts.length) {
+            return res.status(404).send({ message: 'No shifts found for the specified organization and day.' });
+        }
+
+        res.status(200).json(shifts);
+    } catch (err) {
+        console.error('Error fetching shifts by date and organization:', err);
+        res.status(500).send({ message: 'Internal server error' });
+    }
+});
+
+
 module.exports = router;

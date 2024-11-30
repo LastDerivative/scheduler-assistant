@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Employee, Shift, EmployeeRequest } = require('../models/model');  // Importing the Employee model
+const { Employee, Shift, EmployeeRequest, Organization } = require('../models/model');  // Importing the Employee model
 const { createToken, authenticateToken } = require('../auth');
 
 // Register Route
@@ -45,8 +45,12 @@ router.post('/login', async (req, res) => {
       // Generate a JWT token with temp secret to be used across app for one hour
       const token = createToken(employee._id);
 
+      // Extract the manager status from the employee object
+      // Used to direct user to either the manager or employee dashboard
+      const { managerStatus } = employee;
+
       // Send the token to the organization and EmployeeId
-      res.status(200).send({ employeeId: employee._id, token }); 
+      res.status(200).send({ employeeId: employee._id, token, managerStatus}); 
 
     
     } catch (err) { 
@@ -68,7 +72,7 @@ router.get('/all', authenticateToken, async (req, res) => {
 // TODO: Update to not return password hash
 router.get('/:id', authenticateToken, async (req, res) => {
     try {
-        const employee = await Employee.findById(req.params.id);
+        const employee = await Employee.findById(req.params.id).select('-password');
         if (!employee) {
             return res.status(404).send({ error: 'Employee not found' });
         }

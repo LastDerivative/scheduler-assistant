@@ -1,0 +1,109 @@
+[
+  {
+    "orgName": "GusCoffee Inc",
+    "orgEmail": "coffee@example.com",
+    "establishDate": "2022-01-01T00:00:00.000Z",
+    "orgPhone": "123-1245-1234",
+    "_id": "673fe82710c23245c59a9f57",
+    "__v": 0
+  },
+  {
+    "siteName": "OC Store",
+    "orgID": "673fe82710c23245c59a9f57",
+    "address": "Temp Addy",
+    "_id": "673fe82710c23245c59a9f59",
+    "__v": 0
+  },
+  {
+    "message": "Employee registered successfully",
+    "employee": {
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "orgID": "673fe82710c23245c59a9f57",
+        "managerStatus": false,
+        "_id": "673fe82710c23245c59a9f5b",
+        "__v": 0
+    }
+  },
+  {
+    "employeeId": "673fe82710c23245c59a9f5b",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2ZlODI3MTBjMjMyNDVjNTlhOWY1YiIsImlhdCI6MTczMjI0MTQ0OCwiZXhwIjoxNzMyMjQ1MDQ4fQ.SxYOSu8Hn1UW7u2XN_PoqC62jw72QocTYGhliIThpRo"
+  },
+  {
+    "shiftName": "Shift 2024-11-23",
+    "employeeID": "673fe82710c23245c59a9f5b",
+    "startTime": "2024-11-23T08:00:00.000Z",
+    "endTime": "2024-11-23T16:00:00.000Z",
+    "punchIn": null,
+    "punchOut": null,
+    "siteID": "673fe82710c23245c59a9f59",
+    "_id": "673fe82810c23245c59a9f61",
+    "__v": 0
+  },
+  {
+    "shiftName": "Shift 2024-11-24",
+    "employeeID": "673fe82710c23245c59a9f5b",
+    "startTime": "2024-11-24T08:00:00.000Z",
+    "endTime": "2024-11-24T16:00:00.000Z",
+    "punchIn": null,
+    "punchOut": null,
+    "siteID": "673fe82710c23245c59a9f59",
+    "_id": "673fe82810c23245c59a9f65",
+    "__v": 0
+  },
+  {
+    "shiftName": "Shift 2024-11-25",
+    "employeeID": "673fe82710c23245c59a9f5b",
+    "startTime": "2024-11-25T08:00:00.000Z",
+    "endTime": "2024-11-25T16:00:00.000Z",
+    "punchIn": null,
+    "punchOut": null,
+    "siteID": "673fe82710c23245c59a9f59",
+    "_id": "673fe82810c23245c59a9f69",
+    "__v": 0
+  },
+  {
+    "shiftName": "Shift 2024-11-26",
+    "employeeID": "673fe82710c23245c59a9f5b",
+    "startTime": "2024-11-26T08:00:00.000Z",
+    "endTime": "2024-11-26T16:00:00.000Z",
+    "punchIn": null,
+    "punchOut": null,
+    "siteID": "673fe82710c23245c59a9f59",
+    "_id": "673fe82810c23245c59a9f6d",
+    "__v": 0
+  },
+  {
+    "shiftName": "Shift 2024-11-27",
+    "employeeID": "673fe82710c23245c59a9f5b",
+    "startTime": "2024-11-27T08:00:00.000Z",
+    "endTime": "2024-11-27T16:00:00.000Z",
+    "punchIn": null,
+    "punchOut": null,
+    "siteID": "673fe82710c23245c59a9f59",
+    "_id": "673fe82810c23245c59a9f71",
+    "__v": 0
+  },
+  {
+    "shiftName": "Shift 2024-11-28",
+    "employeeID": "673fe82710c23245c59a9f5b",
+    "startTime": "2024-11-28T08:00:00.000Z",
+    "endTime": "2024-11-28T16:00:00.000Z",
+    "punchIn": null,
+    "punchOut": null,
+    "siteID": "673fe82710c23245c59a9f59",
+    "_id": "673fe82810c23245c59a9f75",
+    "__v": 0
+  },
+  {
+    "shiftName": "Shift 2024-11-29",
+    "employeeID": "673fe82710c23245c59a9f5b",
+    "startTime": "2024-11-29T08:00:00.000Z",
+    "endTime": "2024-11-29T16:00:00.000Z",
+    "punchIn": null,
+    "punchOut": null,
+    "siteID": "673fe82710c23245c59a9f59",
+    "_id": "673fe82810c23245c59a9f79",
+    "__v": 0
+  }
+]
