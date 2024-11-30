@@ -65,8 +65,12 @@ const TimesheetTab = ({ shifts }) => {
     const twoWeekPeriod = groupShiftsByDate(shifts); // Group shifts for past two weeks
     setPayPeriod(twoWeekPeriod); // Store grouped shifts in state
 
-    // Store shifts with missing punchIn or punchOut
-    const incomplete = shifts.filter(shift => !shift.punchIn || !shift.punchOut);
+    // Store shifts with missing punchIn or punchOut and have already passed
+    const now = new Date();
+    const incomplete = shifts.filter(
+      shift =>
+        (!shift.punchIn || !shift.punchOut) && new Date(shift.startTime) < now
+    );
     setIncompleteShifts(incomplete);
   }, [shifts]);
 
