@@ -68,7 +68,7 @@ const DashboardTab = ({ shifts, dashboardDates }) => {
       </Box>
 
       {/* "Team Contacts" section */}
-      <Box className="team-contacts" mt={4}>
+      <Box className="team-contacts" mt={4} alignItems={'center'}>
         <Typography variant="h4" gutterBottom sx={{ color: '#ffffff' }}>Team Contacts</Typography>
         <ul>
           <Typography><a href="mailto:j.chestnut@example.com" style={{ color: '#90caf9' }}>Joey Chestnut</a></Typography>

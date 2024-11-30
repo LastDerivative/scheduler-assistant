@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 // To make authenticated call
 import axiosInstance from '../../axiosInstance';
 
@@ -30,6 +30,7 @@ const ShiftCalendar = ( { employeeData } ) => {
         fetchShifts();
     }
 }, [employeeData]);
+
 
   const [calendar, setCalendar] = useState(null);
   const [events, setEvents] = useState([]);
@@ -74,56 +75,65 @@ const ShiftCalendar = ( { employeeData } ) => {
     const events = [
       {
         id: 1,
-        text: "Event 1",
-        start: DayPilot.Date.today().addHours(10),
-        end: DayPilot.Date.today().addHours(12),
-        resource: "R1"
+        text: "Valerie",
+        start: DayPilot.Date.today().addHours(5).addMinutes(0),
+        end: DayPilot.Date.today().addHours(13),
+        resource: "R1",
+        barColor: "#b07298"
       },
       {
         id: 2,
-        text: "Event 2",
-        start: "2024-06-02T10:00:00",
-        end: "2024-06-02T11:00:00",
+        text: "Eric",
+        start: DayPilot.Date.today().addHours(11),
+        end: DayPilot.Date.today().addHours(18),
         resource: "R2",
-        barColor: "#38761d",
-        barBackColor: "#93c47d"
-      }
+        barColor: "#a972b0",
+      },
+      {
+        id: 3,
+        text: "John Doe",
+        start: DayPilot.Date.today().addHours(7),
+        end: DayPilot.Date.today().addHours(15),
+        resource: "R3",
+        barColor: "#8a72b0",
+      },
     ];
 
     setEvents(events);
   }, []);
 
   return (
-    <div>
+    <Box maxWidth='1100px'>
       {/* renders daypilot calendar */}
-      <DayPilotCalendar
+        <DayPilotCalendar
         {...config}
         events={events}
         controlRef={setCalendar}
-      />
+        />
+    </Box>
       
+
       
-      {/* Render JSX based on the JSON data */}
-      {shifts.map((shift) => {
-        const employeeName = shift.employeeID ? shift.employeeID.name : 'Unassigned'; // Default for unassigned shifts
-        const totalHours =
-            (new Date(shift.endTime) - new Date(shift.startTime)) / (1000 * 60 * 60); // Calculate duration
-        const siteName = shift.siteID ? shift.siteID.siteName : 'Unknown Location'; // Default for missing site
-        const employeeID = shift.employeeID ? shift._id : 'no id';
+      /*{ Render JSX based on the JSON data
+        {shifts.map((shift) => {
+          const employeeName = shift.employeeID ? shift.employeeID.name : 'Unassigned'; // Default for unassigned shifts
+          const totalHours =
+              (new Date(shift.endTime) - new Date(shift.startTime)) / (1000 * 60 * 60); // Calculate duration
+          const siteName = shift.siteID ? shift.siteID.siteName : 'Unknown Location'; // Default for missing site
+          const employeeID = shift.employeeID ? shift._id : 'no id';
 
-        return (
-        <div key={shift._id}>
-          <h2>{employeeName}, id:{employeeID}</h2>
-          <p>{new Date(shift.startTime).toLocaleTimeString()}</p>
-          <p>{new Date(shift.endTime).toLocaleTimeString()}</p>
-          <p>{totalHours.toFixed(2)}</p>
-          <p>{siteName}</p>
-          <p>{shifts.length}</p>
-        </div>
-        );
-      })}
-
-    </div>
+          return (
+          <div key={shift._id}>
+            <h2>{employeeName}, id:{employeeID}</h2>
+            <p>{new Date(shift.startTime).toLocaleTimeString()}</p>
+            <p>{new Date(shift.endTime).toLocaleTimeString()}</p>
+            <p>{totalHours.toFixed(2)}</p>
+            <p>{siteName}</p>
+            <p>{shifts.length}</p>
+          </div>
+          );
+        })}
+      }*/
   );
 }
 export default ShiftCalendar;
