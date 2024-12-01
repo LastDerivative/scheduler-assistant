@@ -21,10 +21,20 @@ const Roster = ( {employeeData, organizationData} ) => {
   useEffect(() => {
     const fetchShifts = async () => {
         try {
-            const today = new Date().toISOString().split('T')[0]; // Current date (YYYY-MM-DD)
-            
+            // Get the current date in Eastern Time
+            const todayEastern = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/New_York',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            })
+                .format(new Date())
+                .split('/') // Split the MM/DD/YYYY format
+                .reverse() // Convert to YYYY-MM-DD
+                .join('-'); // Rejoin as ISO format
+
             const response = await axiosInstance.get(`/shifts/org/${employeeData.orgID}/shifts`, {
-                params: { date: today } // Send date
+                params: { date: todayEastern } // Send date in Eastern Time
             });
             //console.log('Shifts for today:', response.data);
             setShifts(response.data); // Store shifts in state
