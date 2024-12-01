@@ -11,25 +11,39 @@ const ShiftCalendar = ( { employeeData } ) => {
 
   useEffect(() => {
     const fetchShifts = async () => {
-        try {
-            const today = new Date().toISOString().split('T')[0]; // Current date (YYYY-MM-DD)
-            
-            const response = await axiosInstance.get(`/shifts/org/${employeeData.orgID}/shifts`, {
-                params: { date: today } // Send date
-            });
-            //console.log('Shifts for today:', response.data);
-            setShifts(response.data); // Store shifts in state
-        } catch (error) {
-            console.error('Error fetching shifts:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+      try {
+        // Get the current date in Eastern Time (YYYY-MM-DD format)
+        const today = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'America/New_York',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        })
+            .format(new Date()) // Convert to Eastern Time
+            .split('/') // Split MM/DD/YYYY into parts
+            .join('-'); // Join into ISO format
+        
+        console.log('Eastern Time Date:', today); // Debugging
 
-    if (employeeData?.orgID) {
-        fetchShifts();
+        // Fetch shifts for the organization
+        const response = await axiosInstance.get(`/shifts/org/${employeeData.orgID}/shifts`, {
+            params: { date: today } // Send the Eastern Time date
+        });
+
+        // Store shifts in state
+        setShifts(response.data);
+    } catch (error) {
+        console.error('Error fetching shifts:', error);
+    } finally {
+        setLoading(false);
     }
-}, [employeeData]);
+};
+
+// Fetch shifts if orgID is available
+if (employeeData?.orgID) {
+    fetchShifts();
+}
+}, [employeeData]); // Dependency array to refetch when employeeData changes
 
 
   const [calendar, setCalendar] = useState(null);
