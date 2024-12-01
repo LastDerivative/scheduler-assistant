@@ -30,7 +30,6 @@ const Roster = ( {employeeData, organizationData} ) => {
             })
                 .format(new Date())
                 .split('/') // Split MM/DD/YYYY into parts
-                .reverse() // Rearrange to YYYY-MM-DD
                 .join('-'); // Join parts into ISO format
             
             console.log('Eastern Time Date:', today); // Debugging
